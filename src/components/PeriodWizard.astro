@@ -1,0 +1,315 @@
+---
+import { eras } from "../data/site";
+// Pass the era knowledge base to the client.
+const eraData = eras.map((e) => ({
+  slug: e.slug, name: e.name, years: e.years, hero: e.hero,
+  considerations: e.considerations, listedFlag: e.listedFlag,
+}));
+---
+<section id="wizard" class="scroll-mt-28">
+  <div class="rounded-[2rem] border border-line bg-paper shadow-soft overflow-hidden">
+    <div class="grid lg:grid-cols-[0.9fr_1.5fr]">
+      <!-- Intro rail -->
+      <div class="bg-green text-cream p-7 sm:p-9 flex flex-col justify-between">
+        <div>
+          <span class="eyebrow text-brass-soft">Free tool · 60 seconds</span>
+          <h2 class="font-display text-3xl sm:text-4xl leading-tight mt-4">
+            Period property?<br />Here's what your<br /><span class="text-brass-soft italic">plumbing</span> actually needs.
+          </h2>
+          <p class="mt-5 text-cream/75 text-[0.97rem] leading-relaxed">
+            Tell us the era and type of your home and the work you're considering. We'll show you
+            what plumbers typically find in that building, whether listed-building consent is likely,
+            and a realistic timeline - before anyone visits.
+          </p>
+        </div>
+        <ul class="mt-8 space-y-2 text-sm text-cream/70">
+          <li class="flex gap-2"><span class="text-brass-soft">›</span> Built on 40 years of period-property work</li>
+          <li class="flex gap-2"><span class="text-brass-soft">›</span> No email needed to see your result</li>
+          <li class="flex gap-2"><span class="text-brass-soft">›</span> Islington · Clerkenwell · North London</li>
+        </ul>
+      </div>
+
+      <!-- Wizard -->
+      <div class="p-6 sm:p-9">
+        <!-- progress -->
+        <div class="flex items-center justify-between mb-7">
+          <div class="flex items-center gap-1.5" id="wiz-dots">
+            {[1,2,3,4].map((i) => (
+              <span data-dot={i} class="h-1.5 rounded-full bg-line transition-all duration-300" style="width:2rem"></span>
+            ))}
+          </div>
+          <span id="wiz-step-label" class="text-[0.78rem] font-semibold text-ink-soft">Step 1 of 4</span>
+        </div>
+
+        <form id="wiz-form" novalidate>
+          <!-- Step 1: postcode -->
+          <fieldset data-step="1">
+            <legend class="font-display text-2xl text-green">Where's the property?</legend>
+            <p class="text-sm text-ink-soft mt-1.5 mb-4">Enter the postcode so we can confirm it's in our coverage area.</p>
+            <label for="wiz-postcode" class="sr-only">Postcode</label>
+            <input id="wiz-postcode" name="postcode" type="text" autocomplete="postal-code"
+              placeholder="e.g. N1 2AB" inputmode="text"
+              class="w-full rounded-2xl border border-line bg-cream px-5 py-4 text-lg uppercase tracking-wide placeholder:normal-case placeholder:tracking-normal placeholder:text-ink-soft/50 focus:border-green focus:bg-paper outline-none" />
+            <p id="wiz-postcode-msg" class="mt-2 text-[0.85rem] min-h-[1.2rem]"></p>
+          </fieldset>
+
+          <!-- Step 2: era -->
+          <fieldset data-step="2" hidden>
+            <legend class="font-display text-2xl text-green">How old is the building?</legend>
+            <p class="text-sm text-ink-soft mt-1.5 mb-4">Roughly when was it built? A best guess is fine.</p>
+            <div class="grid sm:grid-cols-2 gap-2.5" role="radiogroup" aria-label="Property era">
+              {eras.map((e) => (
+                <label class="wiz-opt cursor-pointer rounded-2xl border border-line bg-cream px-4 py-3.5 flex items-center justify-between gap-3 hover:border-green/50 transition-colors">
+                  <span>
+                    <span class="block font-semibold text-ink">{e.name}</span>
+                    <span class="block text-[0.8rem] text-ink-soft">{e.years}</span>
+                  </span>
+                  <input type="radio" name="era" value={e.slug} class="wiz-radio sr-only" />
+                  <span class="wiz-check h-5 w-5 rounded-full border border-line grid place-items-center shrink-0"></span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <!-- Step 3: type -->
+          <fieldset data-step="3" hidden>
+            <legend class="font-display text-2xl text-green">What type of property?</legend>
+            <p class="text-sm text-ink-soft mt-1.5 mb-4">This helps us anticipate access and consent.</p>
+            <div class="grid sm:grid-cols-2 gap-2.5" role="radiogroup" aria-label="Property type">
+              {[
+                ["terrace","Terraced house"],["mansion-flat","Mansion flat (purpose-built)"],
+                ["conversion","Conversion flat"],["mews","Mews house"],
+                ["listed","Listed building"],["new-build","New-build"],
+              ].map(([val,label]) => (
+                <label class="wiz-opt cursor-pointer rounded-2xl border border-line bg-cream px-4 py-3.5 flex items-center justify-between gap-3 hover:border-green/50 transition-colors">
+                  <span class="font-medium text-ink">{label}</span>
+                  <input type="radio" name="ptype" value={val} class="wiz-radio sr-only" />
+                  <span class="wiz-check h-5 w-5 rounded-full border border-line grid place-items-center shrink-0"></span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <!-- Step 4: job -->
+          <fieldset data-step="4" hidden>
+            <legend class="font-display text-2xl text-green">What are you planning?</legend>
+            <p class="text-sm text-ink-soft mt-1.5 mb-4">Choose the closest - we'll tailor the result.</p>
+            <div class="grid sm:grid-cols-2 gap-2.5" role="radiogroup" aria-label="Job type">
+              {[
+                ["bathroom","Bathroom renovation"],["kitchen","Kitchen renovation"],
+                ["boiler","Boiler / heating upgrade"],["drain","Drain / leak issue"],
+                ["emergency","Emergency"],["other","Something else"],
+              ].map(([val,label]) => (
+                <label class="wiz-opt cursor-pointer rounded-2xl border border-line bg-cream px-4 py-3.5 flex items-center justify-between gap-3 hover:border-green/50 transition-colors">
+                  <span class="font-medium text-ink">{label}</span>
+                  <input type="radio" name="job" value={val} class="wiz-radio sr-only" />
+                  <span class="wiz-check h-5 w-5 rounded-full border border-line grid place-items-center shrink-0"></span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <!-- Result -->
+          <div data-step="result" hidden aria-live="polite">
+            <span class="eyebrow text-brass-deep">Your property briefing</span>
+            <h3 id="res-title" class="font-display text-2xl sm:text-3xl text-green mt-2 leading-tight"></h3>
+            <p id="res-lead" class="text-sm text-ink-soft mt-2"></p>
+
+            <div class="mt-5 rounded-2xl bg-cream border border-line p-5">
+              <p class="text-[0.78rem] font-semibold uppercase tracking-wider text-brass-deep mb-3">What plumbers typically find</p>
+              <ul id="res-points" class="space-y-2.5 text-[0.92rem] text-ink-soft"></ul>
+            </div>
+
+            <div id="res-listed" class="mt-3 rounded-2xl border border-brass/40 bg-brass/8 p-4 hidden">
+              <p class="text-[0.9rem] text-ink flex gap-2.5">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8a6c39" stroke-width="2" class="shrink-0 mt-0.5" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+                <span id="res-listed-text"></span>
+              </p>
+            </div>
+
+            <div class="mt-3 grid sm:grid-cols-2 gap-3">
+              <div class="rounded-2xl bg-cream border border-line p-4">
+                <p class="text-[0.74rem] font-semibold uppercase tracking-wider text-ink-soft">Indicative timeline</p>
+                <p id="res-timeline" class="font-display text-lg text-green mt-1"></p>
+              </div>
+              <div class="rounded-2xl bg-cream border border-line p-4">
+                <p class="text-[0.74rem] font-semibold uppercase tracking-wider text-ink-soft">Coverage</p>
+                <p id="res-coverage" class="font-display text-lg text-green mt-1"></p>
+              </div>
+            </div>
+
+            <div class="mt-5 rounded-2xl bg-green p-5 text-cream">
+              <p class="font-display text-lg">Want this looked at properly?</p>
+              <p class="text-cream/75 text-[0.9rem] mt-1">Book a no-obligation site visit and we'll give you a fixed-price quote.</p>
+              <div class="mt-4 flex flex-wrap gap-2.5">
+                <a id="res-book" href="/contact" class="btn btn-brass !py-2.5 text-[0.88rem]">Book a site visit</a>
+                <a href="tel:+442072513418" class="btn btn-ghost !border-cream/30 !text-cream !py-2.5 text-[0.88rem]">Call 020 7251 3418</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- controls -->
+          <div class="mt-7 flex items-center justify-between gap-3">
+            <button type="button" id="wiz-back" class="btn btn-ghost !py-2.5 text-[0.88rem] invisible">Back</button>
+            <button type="button" id="wiz-next" class="btn btn-primary !py-2.5 text-[0.88rem]">Continue</button>
+            <button type="button" id="wiz-restart" class="btn btn-ghost !py-2.5 text-[0.88rem] hidden">Start again</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script type="application/json" id="wiz-era-data" is:inline set:html={JSON.stringify(eraData)}></script>
+</section>
+
+<script>
+  type Era = { slug: string; name: string; years: string; hero: string; considerations: string[]; listedFlag: string };
+  const eras: Era[] = JSON.parse(document.getElementById("wiz-era-data")?.textContent || "[]");
+
+  const COVERAGE = ["N1","N5","N7","N16","EC1","EC2","WC1","NW1","E8","E9"];
+  const TIMELINE: Record<string,string> = {
+    bathroom: "3–6 weeks for a period bathroom",
+    kitchen: "2–4 weeks for kitchen plumbing",
+    boiler: "1 day (swap) to 2 weeks (full system)",
+    drain: "Same day to a few days",
+    emergency: "We aim to attend within hours",
+    other: "Confirmed at your site visit",
+  };
+  const TYPE_LABEL: Record<string,string> = {
+    terrace:"terraced house", "mansion-flat":"mansion flat", conversion:"conversion flat",
+    mews:"mews house", listed:"listed building", "new-build":"new-build",
+  };
+
+  const form = document.getElementById("wiz-form") as HTMLFormElement;
+  if (form) {
+    const KEY = "aps-wizard";
+    const steps = ["1","2","3","4","result"];
+    let cur = 0;
+    const state: Record<string,string> = {};
+
+    const $ = <T extends HTMLElement = HTMLElement>(s: string) => form.querySelector(s) as T;
+    // The progress label + dots live outside the form, so query from the section root.
+    const root = (form.closest("section") || document) as ParentNode;
+    const back = $("#wiz-back") as HTMLButtonElement;
+    const next = $("#wiz-next") as HTMLButtonElement;
+    const restart = $("#wiz-restart") as HTMLButtonElement;
+    const label = root.querySelector("#wiz-step-label") as HTMLElement;
+    const dots = Array.from(root.querySelectorAll<HTMLElement>("[data-dot]"));
+    const pcInput = $("#wiz-postcode") as HTMLInputElement;
+    const pcMsg = $("#wiz-postcode-msg");
+
+    try { Object.assign(state, JSON.parse(localStorage.getItem(KEY) || "{}")); } catch {}
+    if (state.postcode) pcInput.value = state.postcode;
+
+    const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {} };
+
+    const sectionFor = (name: string) => form.querySelector<HTMLElement>(`[data-step="${name}"]`)!;
+
+    const show = (i: number) => {
+      cur = i;
+      steps.forEach((s, idx) => { sectionFor(s).hidden = idx !== i; });
+      const isResult = steps[i] === "result";
+      label.textContent = isResult ? "Your result" : `Step ${i + 1} of 4`;
+      dots.forEach((d, idx) => {
+        d.style.background = idx <= i && !isResult ? "var(--color-green)" : (isResult ? "var(--color-brass)" : "var(--color-line)");
+      });
+      back.classList.toggle("invisible", i === 0);
+      next.classList.toggle("hidden", isResult);
+      restart.classList.toggle("hidden", !isResult);
+      next.textContent = i === 3 ? "See my result" : "Continue";
+      if (steps[i] === "1") pcInput.focus();
+    };
+
+    const validate = (): boolean => {
+      const s = steps[cur];
+      if (s === "1") {
+        const pc = pcInput.value.trim().toUpperCase().replace(/\s+/g, " ");
+        if (!pc) { pcMsg.textContent = "Please enter a postcode."; pcMsg.style.color = "#8a6c39"; return false; }
+        state.postcode = pc;
+        const outward = pc.replace(/\s.*/, "");
+        const covered = COVERAGE.some((p) => outward.startsWith(p));
+        state.covered = covered ? "yes" : "no";
+        pcMsg.textContent = covered
+          ? "Great - that's in our coverage area."
+          : "That's outside our usual patch - we may still help, give us a call.";
+        pcMsg.style.color = covered ? "#1f3a2f" : "#8a6c39";
+        save();
+        return true;
+      }
+      const radios = Array.from(sectionFor(s).querySelectorAll<HTMLInputElement>(".wiz-radio"));
+      const checked = radios.find((r) => r.checked);
+      if (!checked) return false;
+      const nameMap: Record<string,string> = { "2":"era", "3":"ptype", "4":"job" };
+      state[nameMap[s]] = checked.value;
+      save();
+      return true;
+    };
+
+    const buildResult = () => {
+      const era = eras.find((e) => e.slug === state.era) || eras[0];
+      const typeLabel = TYPE_LABEL[state.ptype] || "home";
+      ($("#res-title")).textContent = `Your ${era.name} ${typeLabel}: ${era.hero.toLowerCase()}`;
+      ($("#res-lead")).textContent = `Here's what we'd expect to find - and plan around - in a ${era.name.toLowerCase()} property (${era.years}) like yours.`;
+
+      const ul = $("#res-points");
+      ul.innerHTML = "";
+      era.considerations.forEach((c) => {
+        const li = document.createElement("li");
+        li.className = "flex gap-2.5";
+        li.innerHTML = `<span style="color:#a8854c" aria-hidden="true">›</span><span></span>`;
+        li.querySelector("span:last-child")!.textContent = c;
+        ul.appendChild(li);
+      });
+
+      const listedTriggered = ["georgian","victorian","edwardian"].includes(state.era) || state.ptype === "listed";
+      const listedBox = $("#res-listed");
+      if (listedTriggered) {
+        listedBox.classList.remove("hidden");
+        ($("#res-listed-text")).textContent = era.listedFlag;
+      } else {
+        listedBox.classList.add("hidden");
+      }
+
+      ($("#res-timeline")).textContent = TIMELINE[state.job] || TIMELINE.other;
+      ($("#res-coverage")).textContent = state.covered === "yes" ? `${state.postcode} - covered` : `${state.postcode} - call to confirm`;
+
+      const book = $("#res-book") as HTMLAnchorElement;
+      book.href = `/contact?era=${state.era}&job=${state.job}&pc=${encodeURIComponent(state.postcode || "")}`;
+    };
+
+    next.addEventListener("click", () => {
+      if (!validate()) return;
+      if (cur === 3) { buildResult(); show(4); }
+      else show(cur + 1);
+    });
+    back.addEventListener("click", () => show(Math.max(0, cur - 1)));
+    restart.addEventListener("click", () => {
+      form.reset();
+      Object.keys(state).forEach((k) => delete state[k]);
+      save();
+      pcMsg.textContent = "";
+      form.querySelectorAll(".wiz-opt").forEach((o) => o.classList.remove("is-selected"));
+      show(0);
+    });
+
+    // visual selection state
+    form.querySelectorAll<HTMLInputElement>(".wiz-radio").forEach((r) => {
+      r.addEventListener("change", () => {
+        const group = r.name;
+        form.querySelectorAll<HTMLInputElement>(`.wiz-radio[name="${group}"]`).forEach((other) => {
+          other.closest(".wiz-opt")?.classList.toggle("is-selected", other.checked);
+        });
+      });
+    });
+
+    pcInput.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); next.click(); } });
+
+    show(0);
+  }
+</script>
+
+<style>
+  .wiz-opt.is-selected { border-color: var(--color-green); background: color-mix(in srgb, var(--color-green) 6%, var(--color-paper)); }
+  .wiz-opt.is-selected .wiz-check { border-color: var(--color-green); background: var(--color-green); }
+  .wiz-opt.is-selected .wiz-check::after { content: ""; width: 0.5rem; height: 0.5rem; border-radius: 999px; background: var(--color-cream); }
+</style>

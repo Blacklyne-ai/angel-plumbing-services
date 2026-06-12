@@ -1,0 +1,70 @@
+---
+import Base from "../../layouts/Base.astro";
+import PageHero from "../../components/PageHero.astro";
+import ClosingCTA from "../../components/ClosingCTA.astro";
+import ContactSection from "../../components/ContactSection.astro";
+import { serviceHubs } from "../../data/site";
+
+const hubIcon: Record<string, string> = {
+  plumbing: `<path d="M8 21h8M12 21v-6M5 4h6v4a3 3 0 0 1-6 0V4Z"/><path d="M11 6h4a4 4 0 0 1 4 4v2"/>`,
+  heating: `<path d="M12 3c0 4-5 5-5 9a5 5 0 0 0 10 0c0-2-1-3-2-4 .2 2-1 3-2 3 .5-3-1-6-1-8Z"/>`,
+  "gas-safety": `<path d="M12 3 5 6v5c0 4 3 7 7 9 4-2 7-5 7-9V6l-7-3Z"/><path d="m9 12 2 2 4-4"/>`,
+};
+---
+<Base
+  title="Plumbing, Heating & Gas Safety Services"
+  description="Plumbing, heating and gas safety services from Angel Plumbing - bathrooms, boilers, central heating, drains, CP12 certificates and 24-hour emergency cover across Islington and North London."
+  path="/services"
+>
+  <PageHero
+    eyebrow="What we do"
+    title="Three trades,<br /><span class='italic font-bold'>one family firm.</span>"
+    lead="Forty years of plumbing, heating and gas work across Islington and Clerkenwell - from a dripping tap to a full period-property bathroom restoration."
+    crumbs={[{ label: "Home", href: "/" }, { label: "Services", href: "/services" }]}
+  />
+
+  <section class="bg-cream">
+    <div class="mx-auto max-w-[80rem] px-4 sm:px-6 py-20 sm:py-24 space-y-16">
+      {serviceHubs.map((h) => (
+        <div class="reveal">
+          <div class="flex items-center gap-4 mb-7">
+            <span class="grid h-12 w-12 place-items-center rounded-2xl bg-green text-cream">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={hubIcon[h.slug]} />
+            </span>
+            <div>
+              <span class="text-[0.74rem] font-semibold uppercase tracking-wider text-brass-deep">{h.tag}</span>
+              <h2 class="font-display text-3xl sm:text-4xl text-green leading-none mt-0.5">
+                <a href={`/services/${h.slug}`} class="hover:text-brass-deep transition-colors">{h.title}</a>
+              </h2>
+            </div>
+          </div>
+          <p class="max-w-2xl text-ink-soft leading-relaxed mb-6">{h.blurb}</p>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {h.services.map((s) => (
+              <a href={`/services/${h.slug}/${s.slug}`} class="group rounded-3xl border border-line bg-paper p-6 hover:border-green/40 hover:shadow-soft transition-all">
+                <h3 class="font-display text-xl text-green group-hover:text-brass-deep transition-colors">{s.title}</h3>
+                <p class="mt-2 text-[0.9rem] text-ink-soft leading-relaxed">{s.short}</p>
+                <span class="mt-4 inline-flex items-center gap-1.5 text-[0.85rem] font-semibold text-green group-hover:gap-2.5 transition-all">
+                  Details
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      <div class="reveal rounded-[2rem] border border-brass/30 bg-brass/8 p-8 sm:p-10 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+        <div>
+          <span class="eyebrow text-brass-deep">Out of hours</span>
+          <h2 class="font-display text-2xl sm:text-3xl text-green mt-2">Burst pipe or no heating right now?</h2>
+          <p class="mt-2 text-ink-soft">We run a 24-hour emergency line across North London.</p>
+        </div>
+        <a href="/services/emergency-callout" class="btn btn-primary shrink-0">Emergency callout</a>
+      </div>
+    </div>
+  </section>
+
+  <ClosingCTA />
+  <ContactSection />
+</Base>

@@ -1,0 +1,30 @@
+---
+import { accreditations } from "../data/site";
+interface Props { tone?: "cream" | "paper" }
+const { tone = "paper" } = Astro.props;
+const bg = tone === "cream" ? "bg-cream" : "bg-paper";
+
+const icon: Record<string, string> = {
+  "gas-safe": `<path d="M12 3c0 4-5 5-5 9a5 5 0 0 0 10 0c0-2-1-3-2-4 .2 2-1 3-2 3 .5-3-1-6-1-8Z"/>`,
+  "aphc": `<path d="M3 12h4l2-6 3 12 2-6h4"/>`,
+  "ch": `<path d="M3 21h18M5 21V9l5-4 5 4v12M9 13h2M9 17h2"/>`,
+  "insured": `<path d="M12 3 5 6v5c0 4 3 7 7 9 4-2 7-5 7-9V6l-7-3Z"/><path d="m9 12 2 2 4-4"/>`,
+};
+---
+<div class={`${bg}`}>
+  <div class="mx-auto max-w-[80rem] px-4 sm:px-6 py-7">
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      {accreditations.map((a) => (
+        <div class="flex items-center gap-3 rounded-2xl border border-line bg-cream/40 px-4 py-3.5">
+          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-green/8 text-green">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icon[a.mark]} />
+          </span>
+          <span class="leading-tight">
+            <span class="block text-[0.86rem] font-semibold text-ink">{a.label}</span>
+            <span class="block text-[0.74rem] text-ink-soft">{a.note}</span>
+          </span>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>

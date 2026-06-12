@@ -1,0 +1,13 @@
+---
+// Text wordmark - replaces the unusable 2016 Yell logo.
+interface Props { class?: string; tone?: "ink" | "cream" }
+const { class: cls = "", tone = "ink" } = Astro.props;
+const main = tone === "cream" ? "text-cream" : "text-green";
+const sub = tone === "cream" ? "text-brass-soft" : "text-brass-deep";
+---
+<a href="/" class={`group inline-flex flex-col leading-none ${cls}`} aria-label="Angel Plumbing Services - home">
+  <span class={`font-display text-[1.35rem] sm:text-[1.5rem] tracking-tight ${main} flex items-baseline gap-[0.12em]`}>
+    Angel Plumbing<span class="text-brass">.</span>
+  </span>
+  <span class={`eyebrow text-[0.58rem] mt-[0.3rem] ${sub}`}>Services · Clerkenwell EC1</span>
+</a>

@@ -1,0 +1,98 @@
+---
+import Base from "../../layouts/Base.astro";
+import PageHero from "../../components/PageHero.astro";
+import ClosingCTA from "../../components/ClosingCTA.astro";
+import ContactSection from "../../components/ContactSection.astro";
+import { eras, business } from "../../data/site";
+
+export function getStaticPaths() {
+  return eras.map((e) => ({ params: { era: e.slug }, props: { era: e } }));
+}
+const { era } = Astro.props;
+const others = eras.filter((e) => e.slug !== era.slug);
+const listedTriggered = ["georgian", "victorian", "edwardian"].includes(era.slug);
+---
+<Base
+  title={`${era.name} Property Plumbing (${era.years}) - Islington`}
+  description={`${era.summary} Period-property plumbing specialists for ${era.name.toLowerCase()} homes in Islington and Clerkenwell. Family-run since the 1980s, Gas Safe registered.`}
+  path={`/period-property/${era.slug}`}
+>
+  <PageHero
+    eyebrow={`Period property · ${era.years}`}
+    title={`${era.name} plumbing:<br /><span class='italic font-bold'>${era.hero.toLowerCase()}.</span>`}
+    lead={era.summary}
+    crumbs={[
+      { label: "Home", href: "/" },
+      { label: "Period property", href: "/period-property" },
+      { label: era.name, href: `/period-property/${era.slug}` },
+    ]}
+  />
+
+  <section class="bg-cream">
+    <div class="mx-auto max-w-[80rem] px-4 sm:px-6 py-20 sm:py-24">
+      <div class="grid lg:grid-cols-[1.5fr_0.9fr] gap-12 lg:gap-16">
+        <div class="reveal">
+          <h2 class="font-display text-3xl text-green">What we typically find</h2>
+          <ul class="mt-6 space-y-4">
+            {era.considerations.map((c) => (
+              <li class="flex gap-3.5 rounded-2xl border border-line bg-paper p-5">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a8854c" stroke-width="2" class="shrink-0 mt-0.5" aria-hidden="true"><path d="m9 11 3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                <span class="text-ink-soft leading-relaxed">{c}</span>
+              </li>
+            ))}
+          </ul>
+
+          {listedTriggered && (
+            <div class="mt-8 rounded-3xl border border-brass/30 bg-brass/8 p-7">
+              <p class="eyebrow text-brass-deep flex items-center gap-2">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8a6c39" stroke-width="2" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+                Listed-building note
+              </p>
+              <p class="mt-3 text-ink-soft leading-relaxed">{era.listedFlag}</p>
+              <a href="/period-property/listed-buildings" class="inline-flex items-center gap-1.5 mt-4 text-green font-semibold text-[0.9rem] hover:gap-2.5 transition-all">
+                How we handle listed-building work
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+            </div>
+          )}
+
+          <div class="mt-8 rounded-3xl border border-line bg-cream-deep p-7">
+            <h2 class="font-display text-2xl text-green">Not sure what yours needs?</h2>
+            <p class="mt-2 text-ink-soft leading-relaxed">
+              Our period-property tool gives you a tailored briefing in about a minute - era, property
+              type, the job you're planning, and whether consent is likely.
+            </p>
+            <a href="/period-property-specialist" class="btn btn-primary mt-5">Try the period-property tool</a>
+          </div>
+        </div>
+
+        <aside class="reveal">
+          <div class="sticky top-28 space-y-5">
+            <div class="rounded-3xl border border-line bg-paper p-7">
+              <p class="eyebrow text-brass-deep">Book a site visit</p>
+              <h2 class="font-display text-2xl text-green mt-2 leading-tight">Talk to a specialist.</h2>
+              <p class="mt-3 text-[0.92rem] text-ink-soft leading-relaxed">
+                Forty years on Goswell Road, in the middle of {era.name.toLowerCase()} London.
+              </p>
+              <div class="mt-5 flex flex-col gap-2.5">
+                <a href="/contact" class="btn btn-primary">Book a site visit</a>
+                <a href={`tel:${business.phoneHref}`} class="btn btn-ghost">{business.phoneDisplay}</a>
+              </div>
+            </div>
+            <div class="rounded-3xl border border-line bg-paper p-7">
+              <p class="eyebrow text-brass-deep mb-3">Other eras</p>
+              <ul class="space-y-2">
+                {others.map((o) => (
+                  <li><a href={`/period-property/${o.slug}`} class="text-[0.92rem] text-ink-soft hover:text-green flex justify-between gap-2"><span class="flex gap-2"><span class="text-brass">›</span>{o.name}</span><span class="text-ink-soft/60">{o.years}</span></a></li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <ClosingCTA heading={`Working on a ${era.name.toLowerCase()} home?`} />
+  <ContactSection />
+</Base>

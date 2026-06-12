@@ -1,0 +1,16 @@
+---
+interface Props { items: string[]; tone?: "green" | "cream" }
+const { items, tone = "green" } = Astro.props;
+const bg = tone === "green" ? "bg-green text-cream" : "bg-cream-deep text-green";
+const sep = tone === "green" ? "text-brass-soft" : "text-brass";
+const seq = [...items, ...items];
+---
+<div class={`marquee overflow-hidden py-5 ${bg}`} aria-hidden="true">
+  <div class="marquee-track">
+    {seq.map((item) => (
+      <span class="mx-5 inline-flex items-center gap-5 font-display text-xl sm:text-2xl tracking-tight">
+        {item}<span class={sep}>◆</span>
+      </span>
+    ))}
+  </div>
+</div>

@@ -1,0 +1,27 @@
+---
+import Base from "../layouts/Base.astro";
+import { business } from "../data/site";
+---
+<Base title="Page not found" description="That page couldn't be found." path="/404">
+  <section class="bg-green text-cream min-h-[70vh] grid place-items-center pt-28">
+    <div class="mx-auto max-w-2xl px-6 text-center">
+      <p class="font-display text-7xl sm:text-8xl text-brass-soft">404</p>
+      <h1 class="font-display text-3xl sm:text-4xl mt-4">We couldn't find that page.</h1>
+      <p class="mt-4 text-cream/75 leading-relaxed">
+        It may have moved when we rebuilt the site. Try the home page, or give us a call - the family
+        on Goswell Road is happy to point you the right way.
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a href="/" class="btn btn-brass">Back to home</a>
+        <a href={`tel:${business.phoneHref}`} class="btn btn-ghost !border-cream/30 !text-cream">{business.phoneDisplay}</a>
+      </div>
+      <nav class="mt-10 flex flex-wrap justify-center gap-x-5 gap-y-2 text-[0.9rem] text-cream/70" aria-label="Helpful links">
+        <a href="/services" class="hover:text-cream">Services</a>
+        <a href="/period-property" class="hover:text-cream">Period property</a>
+        <a href="/areas" class="hover:text-cream">Areas</a>
+        <a href="/for-landlords" class="hover:text-cream">Landlords</a>
+        <a href="/contact" class="hover:text-cream">Contact</a>
+      </nav>
+    </div>
+  </section>
+</Base>

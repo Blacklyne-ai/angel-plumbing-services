@@ -1,0 +1,98 @@
+---
+import Base from "../../layouts/Base.astro";
+import PageHero from "../../components/PageHero.astro";
+import PeriodWizard from "../../components/PeriodWizard.astro";
+import ClosingCTA from "../../components/ClosingCTA.astro";
+import ContactSection from "../../components/ContactSection.astro";
+import { eras } from "../../data/site";
+---
+<Base
+  title="Period Property Plumbing Specialists - Islington & Clerkenwell"
+  description="Period-property plumbing specialists for Georgian, Victorian and Edwardian homes in Islington and Clerkenwell. Listed-building consent, cast-iron and lead pipework, heritage bathroom restoration. Family-run since the 1980s."
+  path="/period-property"
+>
+  <PageHero
+    eyebrow="The differentiator"
+    title="We work with the building,<br /><span class='italic font-bold'>not against it.</span>"
+    lead="Islington and Clerkenwell hold central London's densest run of Georgian and Victorian housing. For forty years we've plumbed them - sympathetically, and with an eye on what the building's listing allows."
+    crumbs={[{ label: "Home", href: "/" }, { label: "Period property", href: "/period-property" }]}
+  />
+
+  <!-- intro -->
+  <section class="bg-cream">
+    <div class="mx-auto max-w-[80rem] px-4 sm:px-6 py-20 sm:py-24">
+      <div class="grid lg:grid-cols-[1.3fr_1fr] gap-12 items-start">
+        <div class="reveal">
+          <p class="font-display text-2xl sm:text-3xl text-green leading-snug">
+            A period home plumbs nothing like a new-build. Lead supply pipes, cast-iron drainage at the
+            end of its life, original brass worth restoring, and historic fabric you can't simply chase
+            a pipe through.
+          </p>
+          <p class="mt-6 text-ink-soft leading-relaxed">
+            That's the work we know best. We route services so they're sound and accessible without
+            cutting into original plaster, stone or timber where it can be avoided. We restore cast-iron
+            baths, ceramic basins and brass fittings rather than skip them. And when work affects the
+            fabric or the facade of a listed building, we'll tell you when listed-building consent is
+            likely needed before anyone lifts a floorboard.
+          </p>
+        </div>
+        <div class="reveal rounded-3xl border border-brass/30 bg-brass/8 p-7">
+          <p class="eyebrow text-brass-deep">A quiet note on consent</p>
+          <p class="mt-3 text-ink-soft leading-relaxed text-[0.95rem]">
+            Upgrading plumbing in a listed building often needs no consent - provided historic fabric
+            isn't damaged or obscured. Cutting into original plaster, stone or beams to route pipework
+            usually does. The reversible-intervention principle keeps services removable later without
+            harming the building. We work to it as a matter of course.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- eras grid -->
+  <section class="bg-cream-deep">
+    <div class="mx-auto max-w-[80rem] px-4 sm:px-6 py-20 sm:py-24">
+      <div class="max-w-2xl reveal mb-12">
+        <span class="eyebrow text-brass-deep">By era</span>
+        <h2 class="font-display text-4xl sm:text-5xl text-green leading-[1.05] mt-3">Find your property's era.</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {eras.map((e) => (
+          <a href={`/period-property/${e.slug}`} class="reveal group flex flex-col rounded-3xl border border-line bg-paper p-7 hover:border-green/40 hover:shadow-lift transition-all">
+            <div class="flex items-baseline justify-between">
+              <h3 class="font-display text-2xl text-green group-hover:text-brass-deep transition-colors">{e.name}</h3>
+              <span class="text-[0.78rem] font-semibold text-brass-deep">{e.years}</span>
+            </div>
+            <p class="italic text-brass-deep/90 text-[0.92rem] mt-1">{e.hero}</p>
+            <p class="mt-3 text-[0.92rem] text-ink-soft leading-relaxed flex-1">{e.summary}</p>
+            <span class="mt-5 inline-flex items-center gap-1.5 text-green font-semibold text-[0.88rem] group-hover:gap-2.5 transition-all">
+              {e.name} plumbing
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </a>
+        ))}
+        <a href="/period-property/listed-buildings" class="reveal group flex flex-col justify-between rounded-3xl border border-green/30 bg-green text-cream p-7 hover:bg-green-deep transition-all">
+          <div>
+            <h3 class="font-display text-2xl">Listed buildings</h3>
+            <p class="italic text-brass-soft text-[0.92rem] mt-1">Consent, conservation, care</p>
+            <p class="mt-3 text-[0.92rem] text-cream/75 leading-relaxed">How we approach plumbing work where listed-building consent and conservation officers come into play.</p>
+          </div>
+          <span class="mt-5 inline-flex items-center gap-1.5 font-semibold text-[0.88rem] group-hover:gap-2.5 transition-all">
+            Listed-building work
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- wizard -->
+  <section class="bg-cream">
+    <div class="mx-auto max-w-[80rem] px-4 sm:px-6 py-20 sm:py-24">
+      <div class="reveal"><PeriodWizard /></div>
+    </div>
+  </section>
+
+  <ClosingCTA heading="Planning work on a period home?" />
+  <ContactSection />
+</Base>

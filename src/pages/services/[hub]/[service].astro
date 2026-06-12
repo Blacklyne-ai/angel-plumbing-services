@@ -1,0 +1,91 @@
+---
+import Base from "../../../layouts/Base.astro";
+import PageHero from "../../../components/PageHero.astro";
+import ClosingCTA from "../../../components/ClosingCTA.astro";
+import ContactSection from "../../../components/ContactSection.astro";
+import { serviceHubs, business } from "../../../data/site";
+
+export function getStaticPaths() {
+  return serviceHubs.flatMap((h) =>
+    h.services.map((s) => ({
+      params: { hub: h.slug, service: s.slug },
+      props: { hub: h, service: s },
+    }))
+  );
+}
+const { hub, service } = Astro.props;
+const related = hub.services.filter((s) => s.slug !== service.slug).slice(0, 4);
+---
+<Base
+  title={`${service.title} - Islington & Clerkenwell`}
+  description={`${service.short} ${service.title} from Angel Plumbing Services, Gas Safe registered and family-run in Islington since the 1980s.`}
+  path={`/services/${hub.slug}/${service.slug}`}
+>
+  <PageHero
+    eyebrow={`${hub.title} · Service`}
+    title={service.title}
+    lead={service.short}
+    crumbs={[
+      { label: "Home", href: "/" },
+      { label: "Services", href: "/services" },
+      { label: hub.title, href: `/services/${hub.slug}` },
+      { label: service.title, href: `/services/${hub.slug}/${service.slug}` },
+    ]}
+  />
+
+  <section class="bg-cream">
+    <div class="mx-auto max-w-[80rem] px-4 sm:px-6 py-20 sm:py-24">
+      <div class="grid lg:grid-cols-[1.5fr_0.9fr] gap-12 lg:gap-16">
+        <div class="reveal">
+          <p class="font-display text-2xl sm:text-3xl text-green leading-snug">{service.intro}</p>
+
+          <div class="mt-10">
+            <p class="eyebrow text-brass-deep mb-5">What's included</p>
+            <ul class="space-y-3">
+              {service.points.map((p) => (
+                <li class="flex gap-3 text-ink-soft leading-relaxed">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a8854c" stroke-width="2" class="shrink-0 mt-0.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                  <span>{p}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="mt-10 rounded-3xl border border-line bg-paper p-7">
+            <h2 class="font-display text-2xl text-green">Working in a period property?</h2>
+            <p class="mt-2 text-ink-soft leading-relaxed">
+              Tell us the era and type of your home and we'll show you what's typically involved before
+              we even visit. It takes about a minute.
+            </p>
+            <a href="/period-property-specialist" class="btn btn-ghost mt-5">Try the period-property tool</a>
+          </div>
+        </div>
+
+        <aside class="reveal">
+          <div class="sticky top-28 rounded-3xl border border-line bg-cream-deep p-7">
+            <p class="eyebrow text-brass-deep">Book this work</p>
+            <h2 class="font-display text-2xl text-green mt-2 leading-tight">Get a fixed-price quote.</h2>
+            <p class="mt-3 text-[0.92rem] text-ink-soft leading-relaxed">
+              Family-run, Gas Safe registered and fully insured. Book a site visit or call us straight through.
+            </p>
+            <div class="mt-5 flex flex-col gap-2.5">
+              <a href="/contact" class="btn btn-primary">Book a site visit</a>
+              <a href={`tel:${business.phoneHref}`} class="btn btn-ghost">{business.phoneDisplay}</a>
+            </div>
+            <div class="mt-6 pt-6 border-t border-line">
+              <p class="eyebrow text-brass-deep mb-3">More {hub.title.toLowerCase()}</p>
+              <ul class="space-y-2">
+                {related.map((r) => (
+                  <li><a href={`/services/${hub.slug}/${r.slug}`} class="text-[0.92rem] text-ink-soft hover:text-green flex gap-2"><span class="text-brass">›</span>{r.title}</a></li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <ClosingCTA />
+  <ContactSection />
+</Base>

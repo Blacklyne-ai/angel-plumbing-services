@@ -1,0 +1,94 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import TrustStrip from "../components/TrustStrip.astro";
+import ClosingCTA from "../components/ClosingCTA.astro";
+import ContactSection from "../components/ContactSection.astro";
+import { timeline, reasons, business } from "../data/site";
+---
+<Base
+  title="About Angel Plumbing - Family-Run in Islington Since the 1980s"
+  description="Angel Plumbing Services is a family-run plumbing and heating firm in Clerkenwell, Islington, operating since the 1980s and a limited company since 2002 (Companies House 04437729). Gas Safe registered, APHC members, period-property specialists."
+  path="/about"
+>
+  <PageHero
+    eyebrow="Three generations"
+    title="The family on<br /><span class='italic font-bold'>Goswell Road.</span>"
+    lead="Forty years in one square mile of Islington and Clerkenwell. The same family, the same patch of Georgian and Victorian streets, the same answer when you call."
+    crumbs={[{ label: "Home", href: "/" }, { label: "About", href: "/about" }]}
+  />
+
+  <section class="bg-cream">
+    <div class="mx-auto max-w-[80rem] px-4 sm:px-6 py-20 sm:py-24">
+      <div class="max-w-3xl reveal">
+        <p class="font-display text-2xl sm:text-3xl text-green leading-snug">
+          Angel Plumbing began as a family business in Islington in the 1980s, and we've never left.
+        </p>
+        <p class="mt-6 text-ink-soft leading-relaxed">
+          From our base at 177 Goswell Road, on the border of Islington and the City, we've spent four
+          decades looking after the homes around us - some of London's finest Georgian and Victorian
+          property. We became a limited company in 2002 (registered as Angel Plumbing Services Ltd,
+          Companies House 04437729), but the way we work hasn't changed: you speak to the family that
+          does the job, and we treat your home the way we'd treat our own.
+        </p>
+        <p class="mt-4 text-ink-soft leading-relaxed">
+          Being on this patch for so long has made us specialists almost by accident. When you've
+          plumbed hundreds of period terraces, you learn their quirks - the lead pipes, the cast-iron
+          drainage, the listed facades you can't touch. That knowledge is what sets us apart from a
+          national firm sending whoever's free. We're Gas Safe registered, APHC members and fully
+          insured, and we run a 24-hour line for when things can't wait.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <TrustStrip tone="cream" />
+
+  <!-- timeline -->
+  <section class="bg-cream-deep">
+    <div class="mx-auto max-w-[80rem] px-4 sm:px-6 py-20 sm:py-24">
+      <div class="max-w-2xl reveal">
+        <span class="eyebrow text-brass-deep">Our story</span>
+        <h2 class="font-display text-4xl sm:text-5xl text-green leading-[1.05] mt-3">Forty years, briefly.</h2>
+      </div>
+      <ol class="mt-14 relative">
+        <div class="absolute left-[7px] sm:left-1/2 top-2 bottom-2 w-px bg-line sm:-translate-x-1/2" aria-hidden="true"></div>
+        {timeline.map((t, i) => (
+          <li class="reveal relative pl-9 sm:pl-0 sm:grid sm:grid-cols-2 sm:gap-12 pb-12 last:pb-0">
+            <span class="absolute left-0 sm:left-1/2 top-1.5 h-3.5 w-3.5 rounded-full bg-brass ring-4 ring-cream-deep sm:-translate-x-1/2" aria-hidden="true"></span>
+            <div class={i % 2 === 0 ? "sm:text-right sm:pr-12" : "sm:col-start-2 sm:pl-12"}>
+              <span class="font-display text-3xl text-brass">{t.year}</span>
+              <h3 class="font-display text-2xl text-green mt-1">{t.title}</h3>
+              <p class="mt-2 text-ink-soft leading-relaxed">{t.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- values -->
+  <section class="bg-cream">
+    <div class="mx-auto max-w-[80rem] px-4 sm:px-6 py-20 sm:py-24">
+      <div class="max-w-2xl reveal mb-12">
+        <span class="eyebrow text-brass-deep">What you get</span>
+        <h2 class="font-display text-4xl sm:text-5xl text-green leading-[1.05] mt-3">What forty years buys you.</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-5">
+        {reasons.map((r) => (
+          <div class="reveal rounded-3xl border border-line bg-paper p-7">
+            <span class="font-display text-3xl text-brass">{r.n}</span>
+            <h3 class="font-display text-2xl text-green mt-3">{r.title}</h3>
+            <p class="mt-3 text-ink-soft leading-relaxed">{r.body}</p>
+          </div>
+        ))}
+      </div>
+      <div class="mt-10 reveal">
+        <a href={`tel:${business.phoneHref}`} class="btn btn-primary">Call the family firm · {business.phoneDisplay}</a>
+      </div>
+    </div>
+  </section>
+
+  <ClosingCTA />
+  <ContactSection />
+</Base>

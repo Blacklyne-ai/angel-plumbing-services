@@ -1,0 +1,39 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import PeriodWizard from "../components/PeriodWizard.astro";
+import ContactSection from "../components/ContactSection.astro";
+---
+<Base
+  title="Period Property Plumbing Specialist Tool"
+  description="Free tool: tell us your property's era, type and the work you're planning, and we'll show you what your plumbing typically involves, whether listed-building consent is likely, and a realistic timeline. For Islington, Clerkenwell and North London."
+  path="/period-property-specialist"
+>
+  <PageHero
+    eyebrow="Free tool · 60 seconds"
+    title="Your period property,<br /><span class='italic font-bold'>read in a minute.</span>"
+    lead="Tell us the era and type of your home and the work you're considering. We'll show you what plumbers typically find, whether consent is likely, and a realistic timeline - before anyone visits."
+    crumbs={[{ label: "Home", href: "/" }, { label: "Period-property tool", href: "/period-property-specialist" }]}
+  />
+
+  <section class="bg-cream">
+    <div class="mx-auto max-w-[80rem] px-4 sm:px-6 py-16 sm:py-20">
+      <div class="reveal"><PeriodWizard /></div>
+
+      <div class="mt-12 grid sm:grid-cols-3 gap-4 max-w-4xl">
+        {[
+          ["Built on real work", "The advice draws on forty years of period-property plumbing in Islington and Clerkenwell."],
+          ["No email to see it", "You get your result on screen straight away - details are only needed if you choose to book."],
+          ["Honest about consent", "Where listed-building consent is likely, we say so up front."],
+        ].map(([t, b]) => (
+          <div class="rounded-2xl border border-line bg-paper p-6">
+            <h2 class="font-display text-xl text-green">{t}</h2>
+            <p class="mt-2 text-[0.9rem] text-ink-soft leading-relaxed">{b}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <ContactSection />
+</Base>

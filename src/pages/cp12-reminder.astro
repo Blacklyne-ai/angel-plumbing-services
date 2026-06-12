@@ -1,0 +1,44 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import Cp12Tool from "../components/Cp12Tool.astro";
+import ContactSection from "../components/ContactSection.astro";
+---
+<Base
+  title="Free CP12 Reminder Tool for Landlords"
+  description="Free CP12 reminder tool. Enter your last Landlord Gas Safety Certificate date and we'll work out when the next is due, with an optional reminder before it expires. For landlords across Islington, Clerkenwell and North London."
+  path="/cp12-reminder"
+>
+  <PageHero
+    eyebrow="For landlords"
+    title="Never miss a<br /><span class='italic font-bold'>CP12 renewal.</span>"
+    lead="Your Landlord Gas Safety Certificate is a legal requirement every 12 months. Work out your renewal date below, and let us remind you before it's due."
+    crumbs={[{ label: "Home", href: "/" }, { label: "CP12 reminder", href: "/cp12-reminder" }]}
+  />
+
+  <section class="bg-cream">
+    <div class="mx-auto max-w-[80rem] px-4 sm:px-6 py-16 sm:py-20">
+      <div class="reveal"><Cp12Tool /></div>
+
+      <div class="mt-12 max-w-3xl reveal">
+        <h2 class="font-display text-3xl text-green">Your legal obligations, briefly</h2>
+        <ul class="mt-5 space-y-3">
+          {[
+            "Gas appliances, flues and pipework in let property must be checked at least every 12 months by a Gas Safe registered engineer.",
+            "You must give existing tenants a copy of the record within 28 days of the check, and new tenants a copy at the start of the tenancy.",
+            "The legal duty sits with you, the landlord, under the Gas Safety (Installation and Use) Regulations 1998.",
+            "Non-compliance carries serious penalties - it's not worth the risk, and a reminder makes it easy.",
+          ].map((p) => (
+            <li class="flex gap-3 text-ink-soft leading-relaxed">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a8854c" stroke-width="2" class="shrink-0 mt-0.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              <span>{p}</span>
+            </li>
+          ))}
+        </ul>
+        <a href="/services/gas-safety/landlord-cp12" class="btn btn-ghost mt-7">See our CP12 service</a>
+      </div>
+    </div>
+  </section>
+
+  <ContactSection heading="Book your CP12 check" />
+</Base>

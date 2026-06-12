@@ -1,0 +1,76 @@
+---
+import Wordmark from "./Wordmark.astro";
+import { business, serviceHubs, areas, accreditations } from "../data/site";
+const year = new Date().getFullYear();
+---
+<footer class="bg-green-deep text-cream/80">
+  <div class="mx-auto max-w-[80rem] px-4 sm:px-6 pt-16 pb-10">
+    <div class="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <div>
+        <Wordmark tone="cream" />
+        <p class="mt-5 max-w-xs text-sm leading-relaxed text-cream/70">
+          Family-run plumbing &amp; heating in Islington and Clerkenwell since the 1980s.
+          Period-property specialists, Gas Safe registered, APHC members.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-2">
+          {accreditations.map((a) => (
+            <span class="rounded-full border border-cream/15 px-3 py-1.5 text-[0.7rem] font-medium text-cream/75">{a.label}</span>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h2 class="eyebrow text-brass-soft">Services</h2>
+        <ul class="mt-4 space-y-2.5 text-sm">
+          {serviceHubs.map((h) => (
+            <li><a href={`/services/${h.slug}`} class="text-cream/70 hover:text-cream transition-colors">{h.title}</a></li>
+          ))}
+          <li><a href="/period-property" class="text-cream/70 hover:text-cream transition-colors">Period property</a></li>
+          <li><a href="/services/emergency-callout" class="text-cream/70 hover:text-cream transition-colors">24-hr emergency</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="eyebrow text-brass-soft">Areas</h2>
+        <ul class="mt-4 space-y-2.5 text-sm">
+          {areas.filter((a) => a.primary).slice(0, 6).map((a) => (
+            <li><a href={`/areas/${a.slug}`} class="text-cream/70 hover:text-cream transition-colors">{a.name}</a></li>
+          ))}
+          <li><a href="/areas" class="text-brass-soft hover:text-cream transition-colors">All areas →</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="eyebrow text-brass-soft">Contact</h2>
+        <ul class="mt-4 space-y-3 text-sm">
+          <li><a href={`tel:${business.phoneHref}`} class="text-cream hover:text-brass-soft font-semibold">{business.phoneDisplay}</a></li>
+          <li><a href={`mailto:${business.email}`} class="text-cream/70 hover:text-cream break-all">{business.email}</a></li>
+          <li class="text-cream/70 not-italic">
+            {business.address.line1}<br />
+            {business.address.line2}, {business.address.city}<br />
+            {business.address.postcode}
+          </li>
+          <li class="text-cream/60 text-[0.8rem]">{business.hours}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="my-10 h-px bg-cream/12"></div>
+
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between text-[0.78rem] text-cream/55">
+      <p>
+        © {year} {business.legalName}. Registered in England &amp; Wales,
+        company no. <span class="text-cream/75">{business.companyNumber}</span>.
+        Registered office: {business.address.line1}, {business.address.line2}, {business.address.city} {business.address.postcode}.
+      </p>
+      <nav aria-label="Legal" class="flex flex-wrap gap-x-5 gap-y-2">
+        <a href="/privacy-policy" class="hover:text-cream">Privacy</a>
+        <a href="/cookie-policy" class="hover:text-cream">Cookies</a>
+        <a href="/terms" class="hover:text-cream">Terms</a>
+      </nav>
+    </div>
+    <p class="mt-6 text-[0.72rem] text-cream/40">
+      In a gas emergency call the National Gas Emergency line on 0800 111 999.
+    </p>
+  </div>
+</footer>

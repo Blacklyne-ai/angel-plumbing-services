@@ -1,0 +1,55 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import ClosingCTA from "../components/ClosingCTA.astro";
+import ContactSection from "../components/ContactSection.astro";
+import { business } from "../data/site";
+
+const points = [
+  ["Period-property fluency", "Georgian lead, Victorian cast iron, listed-building consent - we know what your building needs before we lift a floorboard."],
+  ["Heritage restoration", "We restore original cast-iron baths, ceramic basins and brass fittings rather than skip them, with discreet modern services beneath."],
+  ["One firm, start to finish", "Bathrooms and kitchens co-ordinated with tilers, electricians and decorators, so your project runs smoothly."],
+  ["Fixed-price quotes", "A site visit, an honest assessment and a clear fixed-price quote - no surprises."],
+];
+---
+<Base
+  title="Plumber for Homeowners - Period Property Specialists"
+  description="Plumbing and heating for homeowners in Islington and Clerkenwell. Period-property specialists for Georgian and Victorian homes - bathroom and kitchen restoration, boilers, heating and repairs. Family-run since the 1980s."
+  path="/for-homeowners"
+>
+  <PageHero
+    eyebrow="For homeowners"
+    title="For the home<br /><span class='italic font-bold'>you plan to keep.</span>"
+    lead="Planning a bathroom or kitchen restoration in a Georgian or Victorian home? We work with the building, not against it - and we'll be honest about what it needs."
+    crumbs={[{ label: "Home", href: "/" }, { label: "For homeowners", href: "/for-homeowners" }]}
+  />
+
+  <section class="bg-cream">
+    <div class="mx-auto max-w-[80rem] px-4 sm:px-6 py-20 sm:py-24">
+      <div class="grid sm:grid-cols-2 gap-5">
+        {points.map(([t, b], i) => (
+          <div class="reveal rounded-3xl border border-line bg-paper p-7">
+            <span class="font-display text-3xl text-brass">{String(i + 1).padStart(2, "0")}</span>
+            <h2 class="font-display text-2xl text-green mt-3">{t}</h2>
+            <p class="mt-3 text-ink-soft leading-relaxed">{b}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-12 reveal rounded-[2rem] bg-green text-cream p-8 sm:p-12 grid lg:grid-cols-[1.3fr_1fr] gap-8 items-center">
+        <div>
+          <span class="eyebrow text-brass-soft">Start here</span>
+          <h2 class="font-display text-3xl sm:text-4xl mt-2 leading-tight">See what your property needs - in a minute.</h2>
+          <p class="mt-3 text-cream/75 leading-relaxed">Our period-property tool gives you a tailored briefing: era, property type, the job you're planning, and whether listed-building consent is likely.</p>
+        </div>
+        <div class="flex flex-col gap-3">
+          <a href="/period-property-specialist" class="btn btn-brass">Try the period-property tool</a>
+          <a href={`tel:${business.phoneHref}`} class="btn btn-ghost !border-cream/30 !text-cream">{business.phoneDisplay}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ClosingCTA heading="Restoring a period home?" />
+  <ContactSection />
+</Base>

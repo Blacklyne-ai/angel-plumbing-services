@@ -1,0 +1,111 @@
+---
+import { business, eras, serviceHubs } from "../data/site";
+const allServices = serviceHubs.flatMap((h) => h.services.map((s) => `${h.title}: ${s.title}`));
+---
+<form
+  action={`https://formsubmit.co/${business.email}`}
+  method="POST"
+  class="grid gap-4 sm:grid-cols-2"
+>
+  <input type="hidden" name="_subject" value="New enquiry - Angel Plumbing website" />
+  <input type="hidden" name="_template" value="table" />
+  <input type="hidden" name="_captcha" value="false" />
+  <!-- honeypot -->
+  <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+
+  <div>
+    <label for="ef-name" class="block text-sm font-semibold text-ink mb-1.5">Your name</label>
+    <input id="ef-name" name="name" type="text" required autocomplete="name"
+      class="w-full rounded-2xl border border-line bg-cream px-4 py-3 focus:border-green focus:bg-paper outline-none" />
+  </div>
+  <div>
+    <label for="ef-phone" class="block text-sm font-semibold text-ink mb-1.5">Phone</label>
+    <input id="ef-phone" name="phone" type="tel" autocomplete="tel"
+      class="w-full rounded-2xl border border-line bg-cream px-4 py-3 focus:border-green focus:bg-paper outline-none" />
+  </div>
+  <div>
+    <label for="ef-email" class="block text-sm font-semibold text-ink mb-1.5">Email</label>
+    <input id="ef-email" name="email" type="email" required autocomplete="email"
+      class="w-full rounded-2xl border border-line bg-cream px-4 py-3 focus:border-green focus:bg-paper outline-none" />
+  </div>
+  <div>
+    <label for="ef-postcode" class="block text-sm font-semibold text-ink mb-1.5">Property postcode</label>
+    <input id="ef-postcode" name="postcode" type="text" autocomplete="postal-code"
+      class="w-full rounded-2xl border border-line bg-cream px-4 py-3 uppercase focus:border-green focus:bg-paper outline-none" />
+  </div>
+  <div>
+    <label for="ef-era" class="block text-sm font-semibold text-ink mb-1.5">Property age</label>
+    <select id="ef-era" name="property_age"
+      class="w-full rounded-2xl border border-line bg-cream px-4 py-3 focus:border-green focus:bg-paper outline-none">
+      <option value="">Not sure</option>
+      {eras.map((e) => <option value={`${e.name} (${e.years})`}>{e.name} ({e.years})</option>)}
+    </select>
+  </div>
+  <div>
+    <label for="ef-type" class="block text-sm font-semibold text-ink mb-1.5">Property type</label>
+    <select id="ef-type" name="property_type"
+      class="w-full rounded-2xl border border-line bg-cream px-4 py-3 focus:border-green focus:bg-paper outline-none">
+      <option value="">Please choose</option>
+      {["Terraced house","Mansion flat","Conversion flat","Mews house","Listed building","New-build","Commercial premises"].map((t) => <option value={t}>{t}</option>)}
+    </select>
+  </div>
+  <div class="sm:col-span-2">
+    <label for="ef-service" class="block text-sm font-semibold text-ink mb-1.5">What do you need?</label>
+    <select id="ef-service" name="service"
+      class="w-full rounded-2xl border border-line bg-cream px-4 py-3 focus:border-green focus:bg-paper outline-none">
+      <option value="">Please choose</option>
+      <option value="Emergency callout">Emergency callout</option>
+      <option value="Landlord CP12 certificate">Landlord CP12 certificate</option>
+      {allServices.map((s) => <option value={s}>{s}</option>)}
+      <option value="Something else">Something else</option>
+    </select>
+  </div>
+  <div class="sm:col-span-2">
+    <label for="ef-message" class="block text-sm font-semibold text-ink mb-1.5">Anything else? (optional)</label>
+    <textarea id="ef-message" name="message" rows="4"
+      class="w-full rounded-2xl border border-line bg-cream px-4 py-3 focus:border-green focus:bg-paper outline-none resize-y"></textarea>
+  </div>
+  <div class="sm:col-span-2 flex flex-col sm:flex-row sm:items-center gap-4">
+    <button type="submit" class="btn btn-primary !py-3.5 px-8">Send enquiry</button>
+    <p class="text-[0.8rem] text-ink-soft/80">
+      Or call <a href={`tel:${business.phoneHref}`} class="underline hover:text-green font-medium">{business.phoneDisplay}</a>.
+      We'll only use your details to respond - see our <a href="/privacy-policy" class="underline hover:text-green">privacy policy</a>.
+    </p>
+  </div>
+</form>
+
+<script>
+  // Prefill from the period-property wizard handoff (?pc=&era=&job=).
+  const p = new URLSearchParams(location.search);
+  if (p.toString()) {
+    const pc = p.get("pc");
+    if (pc) { const el = document.getElementById("ef-postcode") as HTMLInputElement | null; if (el) el.value = pc; }
+
+    const era = p.get("era");
+    if (era) {
+      const sel = document.getElementById("ef-era") as HTMLSelectElement | null;
+      if (sel) {
+        const name = era.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+        const match = Array.from(sel.options).find((o) => o.text.toLowerCase().startsWith(name.toLowerCase()));
+        if (match) sel.value = match.value;
+      }
+    }
+
+    const jobMap: Record<string, string> = {
+      bathroom: "Plumbing: Bathroom installation",
+      kitchen: "Plumbing: Kitchen installation",
+      boiler: "Heating: Boiler installation",
+      drain: "Plumbing: Drain installation & repair",
+      emergency: "Emergency callout",
+      other: "Something else",
+    };
+    const job = p.get("job");
+    if (job && jobMap[job]) {
+      const sel = document.getElementById("ef-service") as HTMLSelectElement | null;
+      if (sel) {
+        const match = Array.from(sel.options).find((o) => o.value === jobMap[job]);
+        if (match) sel.value = match.value;
+      }
+    }
+  }
+</script>

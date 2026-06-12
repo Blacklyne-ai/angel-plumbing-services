@@ -1,0 +1,94 @@
+---
+import Base from "../../layouts/Base.astro";
+import PageHero from "../../components/PageHero.astro";
+import ClosingCTA from "../../components/ClosingCTA.astro";
+import ContactSection from "../../components/ContactSection.astro";
+import { areas, serviceHubs, business } from "../../data/site";
+
+export function getStaticPaths() {
+  return areas.map((a) => ({ params: { area: a.slug }, props: { area: a } }));
+}
+const { area } = Astro.props;
+const others = areas.filter((a) => a.slug !== area.slug);
+---
+<Base
+  title={`Plumber in ${area.name} (${area.postcode}) - Angel Plumbing`}
+  description={`Family-run plumber and heating engineer covering ${area.name}, ${area.postcode}. Period-property specialists, bathrooms, boilers, drains, CP12 certificates and 24-hour emergency cover. Call ${business.phoneDisplay}.`}
+  path={`/areas/${area.slug}`}
+>
+  <PageHero
+    eyebrow={`${area.postcode} · Area covered`}
+    title={`Your plumber in<br /><span class='italic font-bold'>${area.name}.</span>`}
+    lead={area.blurb}
+    crumbs={[
+      { label: "Home", href: "/" },
+      { label: "Areas", href: "/areas" },
+      { label: area.name, href: `/areas/${area.slug}` },
+    ]}
+  />
+
+  <section class="bg-cream">
+    <div class="mx-auto max-w-[80rem] px-4 sm:px-6 py-20 sm:py-24">
+      <div class="grid lg:grid-cols-[1.4fr_1fr] gap-12 lg:gap-16">
+        <div class="reveal">
+          <p class="font-display text-2xl sm:text-3xl text-green leading-snug">
+            We've been the local plumber across {area.name} and the surrounding streets since the 1980s,
+            working from our base nearby at 177 Goswell Road.
+          </p>
+          <p class="mt-6 text-ink-soft leading-relaxed">
+            Much of {area.name}'s housing is exactly what we specialise in - Georgian and Victorian
+            property with its own particular plumbing, from lead supply pipes and cast-iron drainage to
+            original features worth preserving. Whether it's a planned bathroom restoration, a boiler
+            upgrade, a landlord CP12 or a 24-hour emergency, you're talking to a family firm that knows
+            the area's buildings.
+          </p>
+
+          <h2 class="font-display text-3xl text-green mt-12">What we do in {area.name}</h2>
+          <div class="mt-6 grid sm:grid-cols-3 gap-4">
+            {serviceHubs.map((h) => (
+              <a href={`/services/${h.slug}`} class="rounded-2xl border border-line bg-paper p-5 hover:border-green/40 transition-colors">
+                <h3 class="font-display text-xl text-green">{h.title}</h3>
+                <p class="mt-1.5 text-[0.85rem] text-ink-soft leading-relaxed">{h.services.slice(0,3).map((s)=>s.title).join(", ")}</p>
+              </a>
+            ))}
+          </div>
+
+          <div class="mt-10 rounded-3xl border border-brass/30 bg-brass/8 p-7">
+            <p class="eyebrow text-brass-deep">Period home in {area.name}?</p>
+            <p class="mt-3 text-ink-soft leading-relaxed">
+              Try our period-property tool for a tailored briefing on what your building typically needs.
+            </p>
+            <a href="/period-property-specialist" class="btn btn-primary mt-5">Period-property tool</a>
+          </div>
+        </div>
+
+        <aside class="reveal">
+          <div class="sticky top-28 space-y-5">
+            <div class="rounded-3xl border border-line bg-paper p-7">
+              <p class="eyebrow text-brass-deep">Local &amp; on call</p>
+              <h2 class="font-display text-2xl text-green mt-2 leading-tight">Book {area.name} {area.postcode}.</h2>
+              <div class="mt-5 flex flex-col gap-2.5">
+                <a href="/contact" class="btn btn-primary">Book a site visit</a>
+                <a href={`tel:${business.phoneHref}`} class="btn btn-ghost">{business.phoneDisplay}</a>
+              </div>
+            </div>
+            <div class="overflow-hidden rounded-3xl border border-line">
+              <iframe title="Map of our Goswell Road base" src={business.mapsEmbed} width="100%" height="220" style="border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <div class="rounded-3xl border border-line bg-paper p-7">
+              <p class="eyebrow text-brass-deep mb-3">Nearby areas</p>
+              <ul class="flex flex-wrap gap-2">
+                {others.slice(0, 6).map((o) => (
+                  <li><a href={`/areas/${o.slug}`} class="inline-block rounded-full border border-line px-3 py-1.5 text-[0.82rem] text-ink-soft hover:border-green hover:text-green transition-colors">{o.name}</a></li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <ClosingCTA heading={`Need a plumber in ${area.name}?`} />
+  <ContactSection />
+</Base>

@@ -1,0 +1,51 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import { business } from "../data/site";
+---
+<Base
+  title="Cookie Policy"
+  description="How Angel Plumbing Services Ltd uses cookies and local storage on this website, and how you can control them."
+  path="/cookie-policy"
+>
+  <PageHero eyebrow="Legal" title="Cookie Policy"
+    crumbs={[{ label: "Home", href: "/" }, { label: "Cookie Policy", href: "/cookie-policy" }]} />
+
+  <section class="bg-cream">
+    <div class="mx-auto max-w-[80rem] px-4 sm:px-6 py-16 sm:py-20">
+      <div class="prose-legal">
+        <p>This Cookie Policy explains how {business.legalName} uses cookies and similar technologies on
+          this website. We keep our use of cookies to a minimum.</p>
+
+        <h2>What are cookies?</h2>
+        <p>Cookies are small text files placed on your device when you visit a website. Similar
+          technologies, such as local storage, let a site remember information in your browser. They can
+          be "essential" (needed for the site to work) or "optional" (for example analytics).</p>
+
+        <h2>Cookies we use</h2>
+        <h3>Essential</h3>
+        <ul>
+          <li>We store your cookie choice (accept or reject) in your browser's local storage so we don't
+            ask you on every visit. This is essential and is set regardless of your choice.</li>
+          <li>Our on-site tools (the period-property tool and CP12 reminder tool) may save your progress
+            in your browser's local storage so you don't lose your place. This data stays on your device.</li>
+        </ul>
+        <h3>Optional - analytics</h3>
+        <p>We would like to set optional analytics cookies to understand how visitors use the site so we
+          can improve it. These are only set if you select "Accept all" in our cookie banner. If you
+          select "Reject optional", no analytics cookies are set.</p>
+
+        <h2>Managing your choice</h2>
+        <p>You can change your mind at any time by clearing this site's data in your browser, which will
+          remove your stored choice and show the cookie banner again. You can also block or delete cookies
+          through your browser settings. Blocking essential storage may affect how the site works.</p>
+
+        <h2>More information</h2>
+        <p>For more on how we handle personal data, see our <a href="/privacy-policy">Privacy Policy</a>.
+          For general guidance on cookies you can visit the ICO at
+          <a href="https://ico.org.uk" target="_blank" rel="noopener">ico.org.uk</a>. Questions? Email
+          <a href={`mailto:${business.email}`}>{business.email}</a>.</p>
+      </div>
+    </div>
+  </section>
+</Base>

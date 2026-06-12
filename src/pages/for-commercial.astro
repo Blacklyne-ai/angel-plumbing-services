@@ -1,0 +1,51 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import ClosingCTA from "../components/ClosingCTA.astro";
+import ContactSection from "../components/ContactSection.astro";
+import { business } from "../data/site";
+
+const points = [
+  ["Responsive when it matters", "A failed water heater or blocked drain can close a kitchen. We respond quickly across Clerkenwell and the City fringe."],
+  ["Gas safety &amp; compliance", "Gas Safe registered work, appliance servicing and safety checks for commercial premises."],
+  ["Plumbing &amp; heating", "From catering sinks and water supply to heating and hot water for small commercial spaces."],
+  ["Local &amp; reliable", "Based on Goswell Road, minutes from Exmouth Market and Whitecross Street - we're round the corner."],
+];
+---
+<Base
+  title="Commercial Plumber - Clerkenwell Restaurants & Small Business"
+  description="Plumbing, gas and heating for restaurants and small commercial premises in Clerkenwell, Exmouth Market and the City fringe. Responsive, Gas Safe registered, family-run since the 1980s. Call 020 7251 3418."
+  path="/for-commercial"
+>
+  <PageHero
+    eyebrow="For business"
+    title="Plumbing for premises<br /><span class='italic font-bold'>that can't stop.</span>"
+    lead="Restaurants and small commercial spaces around Clerkenwell and Exmouth Market - responsive plumbing, gas and heating from a firm that's just round the corner."
+    crumbs={[{ label: "Home", href: "/" }, { label: "For commercial", href: "/for-commercial" }]}
+  />
+
+  <section class="bg-cream">
+    <div class="mx-auto max-w-[80rem] px-4 sm:px-6 py-20 sm:py-24">
+      <div class="grid sm:grid-cols-2 gap-5">
+        {points.map(([t, b], i) => (
+          <div class="reveal rounded-3xl border border-line bg-paper p-7">
+            <span class="font-display text-3xl text-brass">{String(i + 1).padStart(2, "0")}</span>
+            <h2 class="font-display text-2xl text-green mt-3" set:html={t} />
+            <p class="mt-3 text-ink-soft leading-relaxed" set:html={b} />
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-12 reveal rounded-3xl border border-brass/30 bg-brass/8 p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+        <div>
+          <h2 class="font-display text-2xl sm:text-3xl text-green">Problem on the premises right now?</h2>
+          <p class="mt-2 text-ink-soft">Our 24-hour line covers commercial emergencies across the area.</p>
+        </div>
+        <a href={`tel:${business.phoneHref}`} class="btn btn-primary shrink-0">{business.phoneDisplay}</a>
+      </div>
+    </div>
+  </section>
+
+  <ClosingCTA heading="Run a business near Clerkenwell?" />
+  <ContactSection heading="Tell us about your premises" />
+</Base>

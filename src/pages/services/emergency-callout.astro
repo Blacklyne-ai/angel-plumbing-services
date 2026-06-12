@@ -1,0 +1,75 @@
+---
+import Base from "../../layouts/Base.astro";
+import PageHero from "../../components/PageHero.astro";
+import ContactSection from "../../components/ContactSection.astro";
+import { business } from "../../data/site";
+
+const situations = [
+  "Burst or leaking pipe",
+  "No heating or hot water",
+  "Boiler breakdown",
+  "Overflowing or blocked drain",
+  "Leaking cylinder or tank",
+  "Smell of gas (call 0800 111 999 first)",
+];
+---
+<Base
+  title="24-Hour Emergency Plumber - Islington & North London"
+  description="24-hour emergency plumber covering Islington, Clerkenwell and North London. Burst pipes, boiler breakdowns, leaks and no heating. Family-run, Gas Safe registered. Call 020 7251 3418."
+  path="/services/emergency-callout"
+>
+  <PageHero
+    eyebrow="24-hour cover"
+    title="Emergency plumber,<br /><span class='italic font-bold'>day or night.</span>"
+    lead="A burst pipe in a period home doesn't wait for office hours. We run a 24-hour emergency line across Islington, Clerkenwell and North London."
+    crumbs={[{ label: "Home", href: "/" }, { label: "Services", href: "/services" }, { label: "Emergency callout", href: "/services/emergency-callout" }]}
+  />
+
+  <section class="bg-cream">
+    <div class="mx-auto max-w-[80rem] px-4 sm:px-6 py-20 sm:py-24">
+      <div class="rounded-[2rem] bg-green text-cream p-8 sm:p-12 flex flex-col lg:flex-row lg:items-center justify-between gap-8 reveal">
+        <div>
+          <p class="eyebrow text-brass-soft">Call us now</p>
+          <a href={`tel:${business.phoneHref}`} class="font-display text-5xl sm:text-6xl block mt-2 hover:text-brass-soft transition-colors">{business.phoneDisplay}</a>
+          <p class="mt-3 text-cream/75 max-w-md">Speak to the family firm, not a call centre. Tell us what's happening and where you are.</p>
+        </div>
+        <a href={`tel:${business.phoneHref}`} class="btn btn-brass shrink-0 text-lg !px-8 !py-4">Call the emergency line</a>
+      </div>
+
+      <div class="mt-14 grid lg:grid-cols-[1fr_1fr] gap-12">
+        <div class="reveal">
+          <h2 class="font-display text-3xl text-green">When to call us out</h2>
+          <ul class="mt-6 grid sm:grid-cols-2 gap-3">
+            {situations.map((s) => (
+              <li class="flex gap-3 rounded-2xl border border-line bg-paper px-4 py-3.5 text-[0.92rem] text-ink-soft">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a8854c" stroke-width="2" class="shrink-0 mt-0.5" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+                {s}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="reveal">
+          <h2 class="font-display text-3xl text-green">While you wait for us</h2>
+          <ol class="mt-6 space-y-4">
+            {[
+              ["Stop the water", "Find your stopcock (often under the kitchen sink) and turn it clockwise to isolate the supply."],
+              ["Kill the power if needed", "If water is near electrics, switch off at the consumer unit."],
+              ["Catch and contain", "Buckets and towels under the leak buy time and limit damage."],
+              ["Smell gas?", "Don't switch anything on or off. Open windows, leave, and call the National Gas Emergency line on 0800 111 999."],
+            ].map(([t, b], i) => (
+              <li class="flex gap-4">
+                <span class="font-display text-2xl text-brass shrink-0">{i + 1}</span>
+                <div>
+                  <p class="font-semibold text-ink">{t}</p>
+                  <p class="text-[0.92rem] text-ink-soft leading-relaxed">{b}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ContactSection heading="Not an emergency? Send us a note" />
+</Base>

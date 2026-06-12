@@ -1,0 +1,159 @@
+---
+// Editorial illustration: a row of Georgian/Victorian London terraced houses.
+// Duotone heritage green on cream with warm brass window-glow. Decorative.
+interface Props { class?: string }
+const { class: cls = "" } = Astro.props;
+---
+
+<svg
+  class={cls}
+  viewBox="0 0 600 760"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  role="img"
+  aria-label="Illustration of a Georgian and Victorian London terrace"
+  preserveAspectRatio="xMidYMax slice"
+>
+  <defs>
+    <linearGradient id="tf-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbf9f4" />
+      <stop offset="1" stop-color="#efe7d8" />
+    </linearGradient>
+    <linearGradient id="tf-glow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c4a572" />
+      <stop offset="1" stop-color="#a8854c" />
+    </linearGradient>
+    <pattern id="tf-grain" width="3" height="3" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="0.4" fill="#142a21" opacity="0.05" />
+    </pattern>
+  </defs>
+
+  <rect width="600" height="760" fill="url(#tf-sky)" />
+
+  <!-- distant rooftops -->
+  <g opacity="0.18" fill="#2c5040">
+    <rect x="0" y="150" width="120" height="610" />
+    <rect x="470" y="120" width="160" height="640" />
+    <polygon points="0,150 60,118 120,150" />
+    <polygon points="470,120 550,86 630,120" />
+  </g>
+
+  <!-- three terraced houses -->
+  <g>
+    <!-- house bodies -->
+    <rect x="70" y="170" width="150" height="590" fill="#1f3a2f" />
+    <rect x="225" y="150" width="150" height="610" fill="#26483a" />
+    <rect x="380" y="178" width="150" height="582" fill="#1f3a2f" />
+
+    <!-- parapets / cornices -->
+    <rect x="62" y="160" width="166" height="14" fill="#142a21" />
+    <rect x="217" y="140" width="166" height="14" fill="#142a21" />
+    <rect x="372" y="168" width="166" height="14" fill="#142a21" />
+
+    <!-- chimney stacks + pots -->
+    <g fill="#142a21">
+      <rect x="120" y="120" width="40" height="44" />
+      <rect x="275" y="100" width="40" height="44" />
+      <rect x="430" y="128" width="40" height="44" />
+    </g>
+    <g fill="#8a6c39">
+      <rect x="126" y="106" width="11" height="20" rx="2" />
+      <rect x="143" y="106" width="11" height="20" rx="2" />
+      <rect x="281" y="86" width="11" height="20" rx="2" />
+      <rect x="298" y="86" width="11" height="20" rx="2" />
+      <rect x="436" y="114" width="11" height="20" rx="2" />
+      <rect x="453" y="114" width="11" height="20" rx="2" />
+    </g>
+  </g>
+
+  <!-- sash windows: 3 houses x 3 floors x 2 windows, with brass glow on a few -->
+  <g>
+    <!-- glow windows -->
+    <rect x="92"  y="250" width="44" height="66" rx="2" fill="url(#tf-glow)" opacity="0.9" />
+    <rect x="320" y="250" width="44" height="66" rx="2" fill="url(#tf-glow)" opacity="0.9" />
+    <rect x="402" y="430" width="44" height="66" rx="2" fill="url(#tf-glow)" opacity="0.9" />
+    <rect x="247" y="430" width="44" height="66" rx="2" fill="url(#tf-glow)" opacity="0.65" />
+  </g>
+
+  <!-- window frames (drawn over) -->
+  <g stroke="#cdbf9f" stroke-width="2" fill="#0f1f18">
+    <!-- helper: rows at y=250, 340, 430, 520 ; cols per house -->
+    <!-- house 1 cols x=92,154 -->
+    <g>
+      <rect x="92"  y="250" width="44" height="66" rx="2" fill="none" />
+      <rect x="154" y="250" width="44" height="66" rx="2" />
+      <rect x="92"  y="340" width="44" height="66" rx="2" />
+      <rect x="154" y="340" width="44" height="66" rx="2" />
+      <rect x="92"  y="430" width="44" height="66" rx="2" />
+      <rect x="154" y="430" width="44" height="66" rx="2" />
+      <rect x="92"  y="520" width="44" height="66" rx="2" />
+      <rect x="154" y="520" width="44" height="66" rx="2" />
+    </g>
+    <!-- house 2 cols x=247,309 -->
+    <g>
+      <rect x="247" y="230" width="44" height="66" rx="2" />
+      <rect x="320" y="250" width="44" height="66" rx="2" fill="none" />
+      <rect x="247" y="320" width="44" height="66" rx="2" />
+      <rect x="309" y="320" width="44" height="66" rx="2" />
+      <rect x="247" y="430" width="44" height="66" rx="2" fill="none" />
+      <rect x="309" y="430" width="44" height="66" rx="2" />
+      <rect x="247" y="520" width="44" height="66" rx="2" />
+      <rect x="309" y="520" width="44" height="66" rx="2" />
+    </g>
+    <!-- house 3 cols x=402,464 -->
+    <g>
+      <rect x="402" y="258" width="44" height="66" rx="2" />
+      <rect x="464" y="258" width="44" height="66" rx="2" />
+      <rect x="402" y="348" width="44" height="66" rx="2" />
+      <rect x="464" y="348" width="44" height="66" rx="2" />
+      <rect x="402" y="430" width="44" height="66" rx="2" fill="none" />
+      <rect x="464" y="430" width="44" height="66" rx="2" />
+      <rect x="402" y="520" width="44" height="66" rx="2" />
+      <rect x="464" y="520" width="44" height="66" rx="2" />
+    </g>
+  </g>
+
+  <!-- sash glazing bars -->
+  <g stroke="#cdbf9f" stroke-width="1" opacity="0.5">
+    <line x1="114" y1="250" x2="114" y2="586" />
+    <line x1="176" y1="250" x2="176" y2="586" />
+    <line x1="269" y1="230" x2="269" y2="586" />
+    <line x1="331" y1="250" x2="331" y2="586" />
+    <line x1="424" y1="258" x2="424" y2="586" />
+    <line x1="486" y1="258" x2="486" y2="586" />
+  </g>
+
+  <!-- ground floor: panelled doors with fanlights + steps -->
+  <g>
+    <!-- door 1 -->
+    <rect x="96" y="612" width="50" height="118" rx="3" fill="#8a6c39" />
+    <rect x="96" y="598" width="50" height="16" rx="8" fill="#142a21" />
+    <circle cx="139" cy="672" r="3" fill="#142a21" />
+    <!-- door 2 (brass / open glow) -->
+    <rect x="276" y="600" width="52" height="130" rx="3" fill="url(#tf-glow)" />
+    <rect x="276" y="586" width="52" height="16" rx="8" fill="#142a21" />
+    <circle cx="321" cy="666" r="3" fill="#142a21" />
+    <!-- door 3 -->
+    <rect x="430" y="616" width="50" height="114" rx="3" fill="#8a6c39" />
+    <rect x="430" y="602" width="50" height="16" rx="8" fill="#142a21" />
+    <circle cx="473" cy="676" r="3" fill="#142a21" />
+  </g>
+
+  <!-- railings -->
+  <g stroke="#142a21" stroke-width="3">
+    <line x1="70" y1="730" x2="530" y2="730" />
+  </g>
+  <g stroke="#142a21" stroke-width="2.4">
+    <line x1="160" y1="700" x2="160" y2="760" />
+    <line x1="178" y1="700" x2="178" y2="760" />
+    <line x1="196" y1="700" x2="196" y2="760" />
+    <line x1="214" y1="700" x2="214" y2="760" />
+    <line x1="340" y1="700" x2="340" y2="760" />
+    <line x1="358" y1="700" x2="358" y2="760" />
+    <line x1="376" y1="700" x2="376" y2="760" />
+    <line x1="490" y1="700" x2="490" y2="760" />
+    <line x1="508" y1="700" x2="508" y2="760" />
+  </g>
+
+  <rect width="600" height="760" fill="url(#tf-grain)" />
+</svg>

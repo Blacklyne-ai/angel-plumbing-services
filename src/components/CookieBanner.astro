@@ -1,0 +1,35 @@
+---
+// UK GDPR / ICO-compliant cookie banner - Accept and Reject equally prominent, no dark patterns.
+---
+<div
+  id="cookie-banner"
+  class="fixed inset-x-3 bottom-3 z-[60] hidden sm:inset-x-auto sm:left-4 sm:bottom-4 sm:max-w-sm"
+  role="dialog" aria-live="polite" aria-label="Cookie notice"
+>
+  <div class="rounded-3xl border border-line bg-paper p-5 shadow-lift">
+    <p class="text-[0.92rem] leading-relaxed text-ink-soft">
+      We use only essential cookies to make this site work. We'd also like to set optional
+      analytics cookies to understand how the site is used. You can accept or reject these -       it's your choice.
+    </p>
+    <div class="mt-4 grid grid-cols-2 gap-2.5">
+      <button id="cookie-reject" class="btn btn-ghost !py-2.5 text-[0.85rem]">Reject optional</button>
+      <button id="cookie-accept" class="btn btn-primary !py-2.5 text-[0.85rem]">Accept all</button>
+    </div>
+    <p class="mt-3 text-[0.74rem] text-ink-soft/70">
+      See our <a href="/cookie-policy" class="underline hover:text-green">Cookie Policy</a>.
+    </p>
+  </div>
+</div>
+
+<script>
+  const KEY = "aps-cookie-consent";
+  const banner = document.getElementById("cookie-banner");
+  const show = () => banner?.classList.remove("hidden");
+  const hide = () => banner?.classList.add("hidden");
+  try {
+    if (!localStorage.getItem(KEY)) setTimeout(show, 700);
+  } catch { setTimeout(show, 700); }
+  const set = (v: string) => { try { localStorage.setItem(KEY, v); } catch {} hide(); };
+  document.getElementById("cookie-accept")?.addEventListener("click", () => set("accepted"));
+  document.getElementById("cookie-reject")?.addEventListener("click", () => set("rejected"));
+</script>

@@ -1,0 +1,24 @@
+---
+import { business } from "../data/site";
+interface Props { heading?: string; sub?: string }
+const {
+  heading = "Need a plumber for your Islington home?",
+  sub = "Book a site visit for planned work, or call straight through for a 24-hour emergency. Forty years on Goswell Road - the same family, the same answer when you call.",
+} = Astro.props;
+---
+<section class="bg-green-deep text-cream relative overflow-hidden">
+  <div class="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-brass/10 blur-3xl" aria-hidden="true"></div>
+  <div class="mx-auto max-w-[80rem] px-4 sm:px-6 py-20 sm:py-28 relative">
+    <div class="max-w-2xl reveal">
+      <span class="eyebrow text-brass-soft">Speak to the family on Goswell Road</span>
+      <h2 class="font-display text-4xl sm:text-6xl leading-[1.04] mt-4">{heading}</h2>
+      <p class="mt-5 text-cream/75 text-lg leading-relaxed">{sub}</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="/contact" class="btn btn-brass">Book a site visit</a>
+        <a href={`tel:${business.phoneHref}`} class="btn btn-ghost !border-cream/30 !text-cream">
+          24-hr emergency · {business.phoneDisplay}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

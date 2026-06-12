@@ -1,0 +1,96 @@
+---
+import { business } from "../data/site";
+---
+<div class="rounded-[2rem] border border-line bg-paper shadow-soft overflow-hidden">
+  <div class="grid lg:grid-cols-2">
+    <div class="bg-cream-deep p-7 sm:p-9">
+      <span class="eyebrow text-brass-deep">Annual legal requirement</span>
+      <h2 class="font-display text-3xl sm:text-4xl text-green leading-tight mt-3">
+        Never miss a CP12 renewal again.
+      </h2>
+      <p class="mt-4 text-ink-soft leading-relaxed">
+        Every landlord must have their gas appliances, flues and pipework checked at least every
+        <strong class="text-ink">12 months</strong> by a Gas Safe registered engineer, and give tenants
+        the record within 28 days. Enter your last certificate date and we'll work out when the next
+        one's due - and, if you like, remind you before it expires.
+      </p>
+      <ul class="mt-6 space-y-2 text-sm text-ink-soft">
+        <li class="flex gap-2"><span class="text-brass">›</span> Free reminder service - we won't spam you</li>
+        <li class="flex gap-2"><span class="text-brass">›</span> One email, around 30 days before it's due</li>
+        <li class="flex gap-2"><span class="text-brass">›</span> Portfolio landlords welcome</li>
+      </ul>
+    </div>
+
+    <div class="p-7 sm:p-9">
+      <form id="cp12-form" novalidate>
+        <label for="cp12-date" class="block text-sm font-semibold text-ink mb-1.5">Date of your last gas safety check</label>
+        <input id="cp12-date" name="last" type="date"
+          class="w-full rounded-2xl border border-line bg-cream px-4 py-3.5 text-base focus:border-green focus:bg-paper outline-none" />
+
+        <div id="cp12-result" class="mt-5 hidden rounded-2xl border border-brass/40 bg-brass/8 p-5">
+          <p class="text-[0.78rem] font-semibold uppercase tracking-wider text-brass-deep">Your next certificate is due</p>
+          <p id="cp12-due" class="font-display text-2xl sm:text-3xl text-green mt-1"></p>
+          <p id="cp12-note" class="text-[0.88rem] text-ink-soft mt-2"></p>
+        </div>
+
+        <div id="cp12-reminder" class="mt-4 hidden">
+          <label for="cp12-email" class="block text-sm font-semibold text-ink mb-1.5">Email me a reminder (optional)</label>
+          <div class="flex flex-col sm:flex-row gap-2.5">
+            <input id="cp12-email" name="email" type="email" autocomplete="email" placeholder="you@example.com"
+              class="flex-1 rounded-2xl border border-line bg-cream px-4 py-3.5 text-base focus:border-green focus:bg-paper outline-none" />
+            <button type="button" id="cp12-remind" class="btn btn-primary !py-3 text-[0.9rem] whitespace-nowrap">Set reminder</button>
+          </div>
+          <p id="cp12-msg" class="mt-2 text-[0.85rem] min-h-[1.1rem]"></p>
+        </div>
+
+        <button type="button" id="cp12-calc" class="mt-2 btn btn-brass w-full !py-3.5">Work out my renewal date</button>
+
+        <p class="mt-4 text-[0.78rem] text-ink-soft/75">
+          Prefer to just book it? Call <a href={`tel:${business.phoneHref}`} class="underline hover:text-green">{business.phoneDisplay}</a>
+          or <a href="/services/gas-safety/landlord-cp12" class="underline hover:text-green">see our CP12 service</a>.
+        </p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById("cp12-form");
+  if (form) {
+    const dateIn = document.getElementById("cp12-date") as HTMLInputElement;
+    const calc = document.getElementById("cp12-calc") as HTMLButtonElement;
+    const result = document.getElementById("cp12-result")!;
+    const reminder = document.getElementById("cp12-reminder")!;
+    const dueEl = document.getElementById("cp12-due")!;
+    const noteEl = document.getElementById("cp12-note")!;
+    const fmt = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "Europe/London" });
+
+    calc.addEventListener("click", () => {
+      if (!dateIn.value) { dateIn.focus(); return; }
+      const last = new Date(dateIn.value + "T12:00:00");
+      const due = new Date(last); due.setFullYear(due.getFullYear() + 1);
+      dueEl.textContent = fmt.format(due);
+      const now = new Date();
+      const days = Math.round((due.getTime() - now.getTime()) / 86400000);
+      noteEl.textContent = days < 0
+        ? `That's ${Math.abs(days)} days ago - your certificate has lapsed. Book a check as soon as you can.`
+        : days <= 60
+          ? `That's only ${days} days away - worth booking now to stay compliant.`
+          : `You're in good time - that's about ${days} days away. We can remind you nearer the date.`;
+      result.classList.remove("hidden");
+      reminder.classList.remove("hidden");
+    });
+
+    document.getElementById("cp12-remind")?.addEventListener("click", () => {
+      const email = (document.getElementById("cp12-email") as HTMLInputElement).value.trim();
+      const msg = document.getElementById("cp12-msg")!;
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+        msg.textContent = "Please enter a valid email address."; msg.style.color = "#8a6c39"; return;
+      }
+      // No backend on a static host - store locally and direct to the booking channel.
+      try { localStorage.setItem("aps-cp12-reminder", JSON.stringify({ email, last: dateIn.value })); } catch {}
+      msg.textContent = "Noted. To confirm your free reminder, drop us a quick email or call - we'll set it up.";
+      msg.style.color = "#1f3a2f";
+    });
+  }
+</script>

@@ -1,0 +1,107 @@
+---
+import "@fontsource/libre-caslon-text/400.css";
+import "@fontsource/libre-caslon-text/400-italic.css";
+import "@fontsource/libre-caslon-text/700.css";
+import "@fontsource-variable/inter";
+import "../styles/global.css";
+
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import FloatingCTA from "../components/FloatingCTA.astro";
+import CookieBanner from "../components/CookieBanner.astro";
+import { business } from "../data/site";
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+  ogType?: string;
+}
+const { title, description, path = "" } = Astro.props;
+const siteName = "Angel Plumbing Services";
+const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
+const canonical = new URL(path, Astro.site ?? "https://angel-plumbing-services.pages.dev").toString();
+
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "Plumber",
+  name: business.legalName,
+  image: canonical,
+  url: Astro.site?.toString(),
+  telephone: business.phoneDisplay,
+  email: business.email,
+  priceRange: "££",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: business.address.line1,
+    addressLocality: "Clerkenwell, London",
+    addressRegion: "Greater London",
+    postalCode: business.address.postcode,
+    addressCountry: "GB",
+  },
+  areaServed: ["Islington", "Clerkenwell", "Highbury", "Canonbury", "Barnsbury", "North London"],
+  founder: { "@type": "Organization", name: business.legalName },
+  foundingDate: "1980",
+  identifier: { "@type": "PropertyValue", name: "Companies House", value: business.companyNumber },
+  openingHours: "Mo-Fr 08:30-17:00",
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.35",
+    bestRating: "5",
+    reviewCount: business.reviewCount,
+  },
+};
+---
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#1f3a2f" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content="/og-image.svg" />
+    <meta property="og:locale" content="en_GB" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+
+    <set:html value={`<script type="application/ld+json">${JSON.stringify(orgSchema)}</script>`} />
+  </head>
+  <body>
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-[70] focus:left-4 focus:top-4 focus:rounded-full focus:bg-green focus:px-5 focus:py-3 focus:text-cream">Skip to content</a>
+
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+
+    <FloatingCTA />
+    <CookieBanner />
+
+    <script>
+      // Reveal-on-scroll
+      const els = document.querySelectorAll<HTMLElement>(".reveal");
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObserver" in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+          });
+        }, { rootMargin: "0px 0px -10% 0px", threshold: 0.08 });
+        els.forEach((el) => io.observe(el));
+      } else {
+        els.forEach((el) => el.classList.add("is-in"));
+      }
+    </script>
+  </body>
+</html>
