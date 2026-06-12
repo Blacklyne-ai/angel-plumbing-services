@@ -26,6 +26,11 @@ const { class: cls = "" } = Astro.props;
     <pattern id="tf-grain" width="3" height="3" patternUnits="userSpaceOnUse">
       <circle cx="1" cy="1" r="0.4" fill="#142a21" opacity="0.05" />
     </pattern>
+    <radialGradient id="tf-depth" cx="50%" cy="38%" r="75%">
+      <stop offset="0" stop-color="#142a21" stop-opacity="0" />
+      <stop offset="0.7" stop-color="#142a21" stop-opacity="0" />
+      <stop offset="1" stop-color="#0d1b15" stop-opacity="0.55" />
+    </radialGradient>
   </defs>
 
   <rect width="600" height="760" fill="url(#tf-sky)" />
@@ -68,11 +73,11 @@ const { class: cls = "" } = Astro.props;
 
   <!-- sash windows: 3 houses x 3 floors x 2 windows, with brass glow on a few -->
   <g>
-    <!-- glow windows -->
-    <rect x="92"  y="250" width="44" height="66" rx="2" fill="url(#tf-glow)" opacity="0.9" />
-    <rect x="320" y="250" width="44" height="66" rx="2" fill="url(#tf-glow)" opacity="0.9" />
-    <rect x="402" y="430" width="44" height="66" rx="2" fill="url(#tf-glow)" opacity="0.9" />
-    <rect x="247" y="430" width="44" height="66" rx="2" fill="url(#tf-glow)" opacity="0.65" />
+    <!-- glow windows (animated) -->
+    <rect class="tf-win" style="--d:0s"   x="92"  y="250" width="44" height="66" rx="2" fill="url(#tf-glow)" />
+    <rect class="tf-win" style="--d:1.1s" x="320" y="250" width="44" height="66" rx="2" fill="url(#tf-glow)" />
+    <rect class="tf-win" style="--d:2.3s" x="402" y="430" width="44" height="66" rx="2" fill="url(#tf-glow)" />
+    <rect class="tf-win" style="--d:1.7s" x="247" y="430" width="44" height="66" rx="2" fill="url(#tf-glow)" />
   </g>
 
   <!-- window frames (drawn over) -->
@@ -156,4 +161,15 @@ const { class: cls = "" } = Astro.props;
   </g>
 
   <rect width="600" height="760" fill="url(#tf-grain)" />
+  <!-- atmospheric depth -->
+  <rect width="600" height="760" fill="url(#tf-depth)" />
 </svg>
+
+<style>
+  .tf-win { opacity: 0.55; animation: tf-flicker 5s ease-in-out infinite; animation-delay: var(--d, 0s); }
+  @keyframes tf-flicker {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.95; }
+  }
+  @media (prefers-reduced-motion: reduce) { .tf-win { animation: none; opacity: 0.85; } }
+</style>

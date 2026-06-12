@@ -224,3 +224,29 @@ Three values. No five-colour splash.
 - [x] One brand colour (heritage green) + warm surface (cream)
 - [x] Business-specific wow factor (Period Property Specialist)
 - [x] Heritage-Islington-trades tone (not trades-banter, not Pimlico-corporate)
+
+---
+
+## MOTION & DEPTH SYSTEM (v2 overhaul)
+
+The site was rebuilt from a flat, single-plane layout into a layered, interactive
+experience while staying fast and accessible.
+
+- **Smooth scroll:** Lenis, with anchor links routed through it.
+- **Z-axis depth:** multi-layer parallax hero (terrace illustration + floating glass
+  chips at different `data-parallax` rates), gradient-mesh + grain + blueprint
+  backgrounds, large faded numeral watermarks behind cards, layered shadows
+  (`--shadow-soft` / `--shadow-lift` / `--shadow-float`).
+- **3D card tilt:** `data-tilt` cards rotate to the cursor; inner content lifts on Z.
+- **Scroll-driven motion:** directional, staggered reveals (`data-reveal`, `data-stagger`)
+  via IntersectionObserver; animated counters; scroll-progress bar.
+- **Cursor:** bespoke dot + trailing ring (fine-pointer devices only), magnetic buttons.
+- **Materials:** glass-morphism chips, brass-gradient display text, animated terrace
+  window-glow, curved SVG section dividers.
+
+**Accessibility & robustness:** everything respects `prefers-reduced-motion`; cursor/tilt
+are disabled on touch/coarse pointers. Critically, motion is **progressive enhancement** -
+reveal elements are only hidden when JS is confirmed active (`html.js`), so the content is
+fully visible with no JS, and a load-time failsafe force-reveals anything an observer might
+miss. `?nofx` disables the JS-gating for debugging/static capture. Implemented in
+`src/scripts/motion.ts` + the motion layer of `src/styles/global.css`.

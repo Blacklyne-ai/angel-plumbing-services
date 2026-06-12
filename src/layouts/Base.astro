@@ -57,6 +57,7 @@ const orgSchema = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>if(!location.search.includes('nofx'))document.documentElement.classList.add('js');</script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
@@ -78,7 +79,11 @@ const orgSchema = {
     <set:html value={`<script type="application/ld+json">${JSON.stringify(orgSchema)}</script>`} />
   </head>
   <body>
-    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-[70] focus:left-4 focus:top-4 focus:rounded-full focus:bg-green focus:px-5 focus:py-3 focus:text-cream">Skip to content</a>
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-[80] focus:left-4 focus:top-4 focus:rounded-full focus:bg-green focus:px-5 focus:py-3 focus:text-cream">Skip to content</a>
+
+    <div id="scroll-progress"></div>
+    <div id="cursor" aria-hidden="true"></div>
+    <div id="cursor-ring" aria-hidden="true"></div>
 
     <Header />
     <main id="main">
@@ -90,18 +95,7 @@ const orgSchema = {
     <CookieBanner />
 
     <script>
-      // Reveal-on-scroll
-      const els = document.querySelectorAll<HTMLElement>(".reveal");
-      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObserver" in window) {
-        const io = new IntersectionObserver((entries) => {
-          entries.forEach((e) => {
-            if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
-          });
-        }, { rootMargin: "0px 0px -10% 0px", threshold: 0.08 });
-        els.forEach((el) => io.observe(el));
-      } else {
-        els.forEach((el) => el.classList.add("is-in"));
-      }
+      import "../scripts/motion.ts";
     </script>
   </body>
 </html>
