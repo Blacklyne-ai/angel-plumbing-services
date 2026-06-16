@@ -5,6 +5,7 @@ import Cp12Tool from "../components/Cp12Tool.astro";
 import ClosingCTA from "../components/ClosingCTA.astro";
 import ContactSection from "../components/ContactSection.astro";
 import { business } from "../data/site";
+import heroImg from "../assets/photos/hero-townhouses.jpg";
 
 const offer = [
   ["Landlord CP12 certificates", "Your annual Gas Safety Record for each let property, issued promptly for your records and your tenants.", "/services/gas-safety/landlord-cp12"],
@@ -23,6 +24,8 @@ const offer = [
     title="One family firm for<br /><span class='italic font-bold'>your whole portfolio.</span>"
     lead="CP12 certificates, repairs and boiler work across Islington and Clerkenwell rentals - with a free reminder so you never miss a renewal, and a single number to call."
     crumbs={[{ label: "Home", href: "/" }, { label: "For landlords", href: "/for-landlords" }]}
+    image={heroImg}
+    imageAlt="A row of red-brick Victorian townhouses in London"
   />
 
   <section class="bg-cream">

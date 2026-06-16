@@ -1,16 +1,32 @@
 ---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 interface Crumb { label: string; href: string }
-interface Props { eyebrow: string; title: string; lead?: string; crumbs?: Crumb[] }
-const { eyebrow, title, lead, crumbs = [] } = Astro.props;
+interface Props { eyebrow: string; title: string; lead?: string; crumbs?: Crumb[]; image?: ImageMetadata; imageAlt?: string }
+const { eyebrow, title, lead, crumbs = [], image, imageAlt = "" } = Astro.props;
 ---
-<section class="relative overflow-hidden mesh-green grain text-cream pt-32 sm:pt-40">
-  <div class="absolute inset-0 blueprint opacity-[0.16]" data-parallax="0.06" aria-hidden="true"></div>
-  <div class="absolute -right-20 -top-10 h-80 w-80 rounded-full bg-brass/15 blur-3xl floaty" data-parallax="0.12" aria-hidden="true"></div>
-  <div class="absolute left-[8%] bottom-6 h-2.5 w-2.5 rounded-full bg-brass/50 floaty hidden lg:block" data-parallax="0.3" aria-hidden="true"></div>
+<section class:list={["relative overflow-hidden text-cream pt-32 sm:pt-40", !image && "mesh-green grain"]}>
+  {image ? (
+    <>
+      <div class="absolute inset-0 hero-kenburns">
+        <Image src={image} alt={imageAlt} widths={[768, 1280, 1920]} sizes="100vw" loading="eager" fetchpriority="high" class="h-full w-full object-cover object-center" />
+      </div>
+      <div class="absolute inset-0 bg-green-deep/55 mix-blend-multiply" aria-hidden="true"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-green-deep via-green-deep/55 to-green-deep/30" aria-hidden="true"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-green-deep/80 to-transparent" aria-hidden="true"></div>
+      <div class="absolute inset-0 grain" aria-hidden="true"></div>
+    </>
+  ) : (
+    <>
+      <div class="absolute inset-0 blueprint opacity-[0.16]" data-parallax="0.06" aria-hidden="true"></div>
+      <div class="absolute -right-20 -top-10 h-80 w-80 rounded-full bg-brass/15 blur-3xl floaty" data-parallax="0.12" aria-hidden="true"></div>
+      <div class="absolute left-[8%] bottom-6 h-2.5 w-2.5 rounded-full bg-brass/50 floaty hidden lg:block" data-parallax="0.3" aria-hidden="true"></div>
+    </>
+  )}
   <div class="mx-auto max-w-[80rem] px-4 sm:px-6 pb-20 sm:pb-24 relative z-10">
     {crumbs.length > 0 && (
       <nav aria-label="Breadcrumb" class="mb-6 reveal">
-        <ol class="flex flex-wrap items-center gap-2 text-[0.8rem] text-cream/55">
+        <ol class="flex flex-wrap items-center gap-2 text-[0.8rem] text-cream/60">
           {crumbs.map((c, i) => (
             <li class="flex items-center gap-2">
               {i > 0 && <span class="text-brass-soft/60" aria-hidden="true">/</span>}
@@ -21,8 +37,8 @@ const { eyebrow, title, lead, crumbs = [] } = Astro.props;
       </nav>
     )}
     <p class="eyebrow text-brass-soft reveal">{eyebrow}</p>
-    <h1 class="font-display text-[2.6rem] sm:text-6xl xl:text-7xl leading-[1.04] tracking-tight mt-4 max-w-4xl reveal" data-delay="80" set:html={title} />
-    {lead && <p class="mt-6 text-lg text-cream/75 leading-relaxed max-w-2xl reveal" data-delay="160">{lead}</p>}
+    <h1 class:list={["font-display text-[2.6rem] sm:text-6xl xl:text-7xl leading-[1.04] tracking-tight mt-4 max-w-4xl reveal", image && "[text-shadow:0_2px_24px_rgba(13,27,21,0.55)]"]} data-delay="80" set:html={title} />
+    {lead && <p class:list={["mt-6 text-lg text-cream/80 leading-relaxed max-w-2xl reveal", image && "[text-shadow:0_1px_12px_rgba(13,27,21,0.6)]"]} data-delay="160">{lead}</p>}
   </div>
   <svg class="divider-bottom text-cream" viewBox="0 0 1440 50" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 50V25C240 4 480 0 720 8s480 24 720 4v38z"/></svg>
 </section>

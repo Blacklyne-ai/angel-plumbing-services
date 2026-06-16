@@ -4,6 +4,7 @@ import PageHero from "../../components/PageHero.astro";
 import ClosingCTA from "../../components/ClosingCTA.astro";
 import ContactSection from "../../components/ContactSection.astro";
 import { serviceHubs } from "../../data/site";
+import heroImg from "../../assets/photos/pipework.jpg";
 
 const hubIcon: Record<string, string> = {
   plumbing: `<path d="M8 21h8M12 21v-6M5 4h6v4a3 3 0 0 1-6 0V4Z"/><path d="M11 6h4a4 4 0 0 1 4 4v2"/>`,
@@ -21,6 +22,8 @@ const hubIcon: Record<string, string> = {
     title="Three trades,<br /><span class='italic font-bold'>one family firm.</span>"
     lead="Forty years of plumbing, heating and gas work across Islington and Clerkenwell - from a dripping tap to a full period-property bathroom restoration."
     crumbs={[{ label: "Home", href: "/" }, { label: "Services", href: "/services" }]}
+    image={heroImg}
+    imageAlt="Copper and brass pipework with bolted flanges"
   />
 
   <section class="bg-cream">

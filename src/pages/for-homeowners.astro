@@ -4,6 +4,7 @@ import PageHero from "../components/PageHero.astro";
 import ClosingCTA from "../components/ClosingCTA.astro";
 import ContactSection from "../components/ContactSection.astro";
 import { business } from "../data/site";
+import heroImg from "../assets/photos/period-bathroom.jpg";
 
 const points = [
   ["Period-property fluency", "Georgian lead, Victorian cast iron, listed-building consent - we know what your building needs before we lift a floorboard."],
@@ -22,6 +23,8 @@ const points = [
     title="For the home<br /><span class='italic font-bold'>you plan to keep.</span>"
     lead="Planning a bathroom or kitchen restoration in a Georgian or Victorian home? We work with the building, not against it - and we'll be honest about what it needs."
     crumbs={[{ label: "Home", href: "/" }, { label: "For homeowners", href: "/for-homeowners" }]}
+    image={heroImg}
+    imageAlt="An elegant period bathroom with a freestanding bath and gilt mirror"
   />
 
   <section class="bg-cream">

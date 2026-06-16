@@ -4,6 +4,7 @@ import PageHero from "../../components/PageHero.astro";
 import ClosingCTA from "../../components/ClosingCTA.astro";
 import ContactSection from "../../components/ContactSection.astro";
 import { eras, business } from "../../data/site";
+import heroImg from "../../assets/photos/hero-townhouses.jpg";
 
 export function getStaticPaths() {
   return eras.map((e) => ({ params: { era: e.slug }, props: { era: e } }));
@@ -26,6 +27,8 @@ const listedTriggered = ["georgian", "victorian", "edwardian"].includes(era.slug
       { label: "Period property", href: "/period-property" },
       { label: era.name, href: `/period-property/${era.slug}` },
     ]}
+    image={heroImg}
+    imageAlt="A row of red-brick period townhouses in London"
   />
 
   <section class="bg-cream">

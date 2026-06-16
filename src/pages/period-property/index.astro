@@ -5,6 +5,7 @@ import PeriodWizard from "../../components/PeriodWizard.astro";
 import ClosingCTA from "../../components/ClosingCTA.astro";
 import ContactSection from "../../components/ContactSection.astro";
 import { eras } from "../../data/site";
+import heroImg from "../../assets/photos/terrace-row.jpg";
 ---
 <Base
   title="Period Property Plumbing Specialists - Islington & Clerkenwell"
@@ -16,6 +17,8 @@ import { eras } from "../../data/site";
     title="We work with the building,<br /><span class='italic font-bold'>not against it.</span>"
     lead="Islington and Clerkenwell hold central London's densest run of Georgian and Victorian housing. For forty years we've plumbed them - sympathetically, and with an eye on what the building's listing allows."
     crumbs={[{ label: "Home", href: "/" }, { label: "Period property", href: "/period-property" }]}
+    image={heroImg}
+    imageAlt="A long row of red-brick Victorian mansion blocks in London"
   />
 
   <!-- intro -->
