@@ -4,6 +4,7 @@ import PageHero from "../../components/PageHero.astro";
 import ClosingCTA from "../../components/ClosingCTA.astro";
 import ContactSection from "../../components/ContactSection.astro";
 import { areas, serviceHubs, business } from "../../data/site";
+import heroImg from "../../assets/photos/hero-townhouses.jpg";
 
 export function getStaticPaths() {
   return areas.map((a) => ({ params: { area: a.slug }, props: { area: a } }));
@@ -25,6 +26,8 @@ const others = areas.filter((a) => a.slug !== area.slug);
       { label: "Areas", href: "/areas" },
       { label: area.name, href: `/areas/${area.slug}` },
     ]}
+    image={heroImg}
+    imageAlt={`Period townhouses in ${area.name}, London`}
   />
 
   <section class="bg-cream">

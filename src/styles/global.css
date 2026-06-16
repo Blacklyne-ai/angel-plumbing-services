@@ -151,15 +151,13 @@ html.js .reveal.is-in, html.js [data-reveal].is-in { opacity: 1; transform: none
   transform: scaleX(0); transform-origin: 0 50%; z-index: 70; pointer-events: none;
 }
 
-/* ---------- Custom cursor ---------- */
-#cursor, #cursor-ring { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 90; border-radius: 999px; mix-blend-mode: difference; }
-#cursor { width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; background: #f4efe6; transition: width .25s, height .25s; }
-#cursor-ring { width: 36px; height: 36px; margin: -18px 0 0 -18px; border: 1px solid rgba(244,239,230,0.7); transition: width .3s, height .3s, border-color .3s; }
-.has-cursor { cursor: none; }
-.has-cursor a, .has-cursor button, .has-cursor input, .has-cursor select, .has-cursor textarea, .has-cursor label { cursor: none; }
-.cursor-hover #cursor { width: 0; height: 0; }
-.cursor-hover #cursor-ring { width: 56px; height: 56px; border-color: var(--color-brass-soft); }
-@media (hover: none), (pointer: coarse) { #cursor, #cursor-ring { display: none; } }
+/* ---------- Click feedback: brass pulse ring ---------- */
+.click-pulse { animation: clickpulse 0.55s cubic-bezier(0.22, 1, 0.36, 1); }
+@keyframes clickpulse {
+  0% { box-shadow: 0 0 0 0 rgba(168, 133, 76, 0.55), var(--shadow-lift); }
+  100% { box-shadow: 0 0 0 16px rgba(168, 133, 76, 0), var(--shadow-soft); }
+}
+@media (prefers-reduced-motion: reduce) { .click-pulse { animation: none; } }
 
 /* ---------- Buttons ---------- */
 .btn {

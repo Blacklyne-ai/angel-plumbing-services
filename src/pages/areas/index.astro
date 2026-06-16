@@ -4,6 +4,7 @@ import PageHero from "../../components/PageHero.astro";
 import ClosingCTA from "../../components/ClosingCTA.astro";
 import ContactSection from "../../components/ContactSection.astro";
 import { areas, extraAreaNames, business } from "../../data/site";
+import heroImg from "../../assets/photos/terrace-row.jpg";
 const primary = areas.filter((a) => a.primary);
 const secondary = areas.filter((a) => !a.primary);
 ---
@@ -17,6 +18,8 @@ const secondary = areas.filter((a) => !a.primary);
     title="From our door<br /><span class='italic font-bold'>to yours.</span>"
     lead="Based at 177 Goswell Road on the Islington/City border - minutes from the period streets we know best, and across North London for everything else."
     crumbs={[{ label: "Home", href: "/" }, { label: "Areas", href: "/areas" }]}
+    image={heroImg}
+    imageAlt="A row of red-brick Victorian mansion blocks in London"
   />
 
   <section class="bg-cream">

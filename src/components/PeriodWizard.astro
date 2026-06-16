@@ -205,7 +205,7 @@ const eraData = eras.map((e) => ({
 
     const sectionFor = (name: string) => form.querySelector<HTMLElement>(`[data-step="${name}"]`)!;
 
-    const show = (i: number) => {
+    const show = (i: number, focusInput = false) => {
       cur = i;
       steps.forEach((s, idx) => { sectionFor(s).hidden = idx !== i; });
       const isResult = steps[i] === "result";
@@ -217,7 +217,11 @@ const eraData = eras.map((e) => ({
       next.classList.toggle("hidden", isResult);
       restart.classList.toggle("hidden", !isResult);
       next.textContent = i === 3 ? "See my result" : "Continue";
-      if (steps[i] === "1") pcInput.focus();
+      // Only focus on user-driven step changes, and never scroll the page to do it.
+      if (focusInput) {
+        const focusEl = sectionFor(steps[i]).querySelector<HTMLElement>("input, .wiz-opt");
+        focusEl?.focus({ preventScroll: true });
+      }
     };
 
     const validate = (): boolean => {
@@ -279,17 +283,17 @@ const eraData = eras.map((e) => ({
 
     next.addEventListener("click", () => {
       if (!validate()) return;
-      if (cur === 3) { buildResult(); show(4); }
-      else show(cur + 1);
+      if (cur === 3) { buildResult(); show(4, true); }
+      else show(cur + 1, true);
     });
-    back.addEventListener("click", () => show(Math.max(0, cur - 1)));
+    back.addEventListener("click", () => show(Math.max(0, cur - 1), true));
     restart.addEventListener("click", () => {
       form.reset();
       Object.keys(state).forEach((k) => delete state[k]);
       save();
       pcMsg.textContent = "";
       form.querySelectorAll(".wiz-opt").forEach((o) => o.classList.remove("is-selected"));
-      show(0);
+      show(0, true);
     });
 
     // visual selection state

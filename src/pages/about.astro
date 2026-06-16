@@ -1,10 +1,20 @@
 ---
+import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
 import PageHero from "../components/PageHero.astro";
 import TrustStrip from "../components/TrustStrip.astro";
 import ClosingCTA from "../components/ClosingCTA.astro";
 import ContactSection from "../components/ContactSection.astro";
 import { timeline, reasons, business } from "../data/site";
+import heroImg from "../assets/photos/hero-townhouses.jpg";
+import storyImg from "../assets/photos/period-bathroom.jpg";
+
+const stats = [
+  { v: "40", suf: "", l: "Years in Islington", count: true },
+  { v: "2002", suf: "", l: "Ltd since (CH 04437729)", count: false },
+  { v: "8.7", suf: "", l: "Rated on Checkatrade", count: false },
+  { v: "24", suf: "/7", l: "Emergency cover", count: false },
+];
 ---
 <Base
   title="About Angel Plumbing - Family-Run in Islington Since the 1980s"
@@ -16,29 +26,65 @@ import { timeline, reasons, business } from "../data/site";
     title="The family on<br /><span class='italic font-bold'>Goswell Road.</span>"
     lead="Forty years in one square mile of Islington and Clerkenwell. The same family, the same patch of Georgian and Victorian streets, the same answer when you call."
     crumbs={[{ label: "Home", href: "/" }, { label: "About", href: "/about" }]}
+    image={heroImg}
+    imageAlt="A row of red-brick Victorian townhouses in London at golden hour"
   />
 
-  <section class="bg-cream">
-    <div class="mx-auto max-w-[80rem] px-4 sm:px-6 py-20 sm:py-24">
-      <div class="max-w-3xl reveal">
-        <p class="font-display text-2xl sm:text-3xl text-green leading-snug">
-          Angel Plumbing began as a family business in Islington in the 1980s, and we've never left.
-        </p>
-        <p class="mt-6 text-ink-soft leading-relaxed">
-          From our base at 177 Goswell Road, on the border of Islington and the City, we've spent four
-          decades looking after the homes around us - some of London's finest Georgian and Victorian
-          property. We became a limited company in 2002 (registered as Angel Plumbing Services Ltd,
-          Companies House 04437729), but the way we work hasn't changed: you speak to the family that
-          does the job, and we treat your home the way we'd treat our own.
-        </p>
-        <p class="mt-4 text-ink-soft leading-relaxed">
-          Being on this patch for so long has made us specialists almost by accident. When you've
-          plumbed hundreds of period terraces, you learn their quirks - the lead pipes, the cast-iron
-          drainage, the listed facades you can't touch. That knowledge is what sets us apart from a
-          national firm sending whoever's free. We're Gas Safe registered, APHC members and fully
-          insured, and we run a 24-hour line for when things can't wait.
-        </p>
+  <!-- story + image -->
+  <section class="relative mesh-cream overflow-hidden">
+    <div class="absolute -left-32 top-24 h-72 w-72 rounded-full bg-brass/8 blur-3xl" data-parallax="0.1" aria-hidden="true"></div>
+    <div class="mx-auto max-w-[80rem] px-4 sm:px-6 py-20 sm:py-28 relative">
+      <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-center">
+        <div class="reveal" data-reveal="left">
+          <span class="eyebrow text-brass-deep">Since the 1980s</span>
+          <p class="font-display text-2xl sm:text-4xl text-green leading-[1.15] mt-4">
+            Angel Plumbing began as a family business in Islington in the 1980s -
+            <span class="text-gold">and we've never left.</span>
+          </p>
+          <p class="mt-6 text-ink-soft leading-relaxed">
+            From our base at 177 Goswell Road, on the border of Islington and the City, we've spent four
+            decades looking after the homes around us - some of London's finest Georgian and Victorian
+            property. We became a limited company in 2002 (registered as Angel Plumbing Services Ltd,
+            Companies House 04437729), but the way we work hasn't changed: you speak to the family that
+            does the job, and we treat your home the way we'd treat our own.
+          </p>
+          <p class="mt-4 text-ink-soft leading-relaxed">
+            Being on this patch for so long has made us specialists almost by accident. When you've
+            plumbed hundreds of period terraces, you learn their quirks - the lead pipes, the cast-iron
+            drainage, the listed facades you can't touch. That knowledge is what sets us apart from a
+            national firm sending whoever's free.
+          </p>
+        </div>
+        <div class="relative" data-reveal="right">
+          <div data-tilt="5" class="relative overflow-hidden rounded-[2rem] shadow-float">
+            <Image src={storyImg} alt="An elegant restored period bathroom with a freestanding bath"
+              widths={[500, 800]} sizes="(min-width: 1024px) 40vw, 90vw" loading="lazy"
+              class="w-full h-[30rem] object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-green-deep/55 to-transparent"></div>
+            <p class="absolute left-6 bottom-6 text-cream font-display text-2xl">Heritage, done properly.</p>
+          </div>
+          <div class="absolute -left-4 sm:-left-8 top-8 glass rounded-2xl px-5 py-3.5 floaty" data-parallax="0.16">
+            <p class="font-display text-3xl text-green leading-none"><span data-count="40">40</span></p>
+            <p class="text-[0.7rem] font-semibold uppercase tracking-wider text-brass-deep mt-1">Years on Goswell Rd</p>
+          </div>
+        </div>
       </div>
+    </div>
+  </section>
+
+  <!-- stat band -->
+  <section class="relative mesh-green grain text-cream overflow-hidden">
+    <div class="mx-auto max-w-[80rem] px-4 sm:px-6 py-12 relative z-10">
+      <dl class="grid grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-4" data-stagger>
+        {stats.map((s) => (
+          <div class="text-center lg:text-left lg:px-3 lg:border-l lg:border-cream/15 lg:first:border-0">
+            <dt class="font-display text-5xl sm:text-6xl text-cream leading-none">
+              {s.count ? <span data-count={s.v} data-suffix={s.suf}>{s.v}{s.suf}</span> : <span>{s.v}<span class="text-brass-soft">{s.suf}</span></span>}
+            </dt>
+            <dd class="text-[0.82rem] text-cream/60 mt-2.5">{s.l}</dd>
+          </div>
+        ))}
+      </dl>
     </div>
   </section>
 
@@ -72,19 +118,20 @@ import { timeline, reasons, business } from "../data/site";
     <div class="mx-auto max-w-[80rem] px-4 sm:px-6 py-20 sm:py-24">
       <div class="max-w-2xl reveal mb-12">
         <span class="eyebrow text-brass-deep">What you get</span>
-        <h2 class="font-display text-4xl sm:text-5xl text-green leading-[1.05] mt-3">What forty years buys you.</h2>
+        <h2 class="font-display text-4xl sm:text-5xl text-green leading-[1.05] mt-3">What forty years <span class="text-gold">buys you.</span></h2>
       </div>
-      <div class="grid sm:grid-cols-2 gap-5">
+      <div class="grid sm:grid-cols-2 gap-5" data-stagger>
         {reasons.map((r) => (
-          <div class="reveal rounded-3xl border border-line bg-paper p-7">
-            <span class="font-display text-3xl text-brass">{r.n}</span>
-            <h3 class="font-display text-2xl text-green mt-3">{r.title}</h3>
-            <p class="mt-3 text-ink-soft leading-relaxed">{r.body}</p>
+          <div data-tilt="4" class="group relative rounded-3xl border border-line bg-paper p-7 shadow-soft hover:shadow-lift transition-shadow overflow-hidden">
+            <span class="absolute -right-3 -top-5 font-display text-[7rem] leading-none text-brass/10 select-none">{r.n}</span>
+            <span class="relative font-display text-3xl text-gold">{r.n}</span>
+            <h3 class="relative font-display text-2xl text-green mt-3">{r.title}</h3>
+            <p class="relative mt-3 text-ink-soft leading-relaxed">{r.body}</p>
           </div>
         ))}
       </div>
       <div class="mt-10 reveal">
-        <a href={`tel:${business.phoneHref}`} class="btn btn-primary">Call the family firm · {business.phoneDisplay}</a>
+        <a href={`tel:${business.phoneHref}`} class="btn btn-primary" data-magnetic="0.25">Call the family firm · {business.phoneDisplay}</a>
       </div>
     </div>
   </section>
